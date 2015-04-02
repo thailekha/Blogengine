@@ -13,8 +13,12 @@ public class Blog extends Model {
 
 	@ManyToOne
 	public User blogOwner;
+	
 	@OneToMany
 	public List<Post> posts;
+	
+	@OneToMany
+	public List<Page> pages;
 	
 	public String blogTitle;
 	public Date blogDate;

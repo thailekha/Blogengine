@@ -22,8 +22,9 @@ public class Accounts extends Controller {
     	render();
     }
     
-    public static void register(String name, String email, String password) {
-    	User user = new User(name, email, password);
+    public static void register(String firstName,
+    		String lastName, String email, int age, String password) {
+    	User user = new User(firstName,lastName,email,age,password);
     	user.save();
     	index();
     }

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -13,18 +14,20 @@ import play.db.jpa.Model;
 public class Post extends Model {
 
 	@ManyToOne
-	public Blog blogHost;
+	public Blog blogPostHost;
 	
 	@OneToMany
 	public List<Comment> commentsPost;
 	
 	public String postTitle;
+	
+	@Lob
 	public String content;
 	public Date postDate;
 	
-	public Post(Blog blogHost,String postTitle, String content)
+	public Post(Blog blogPostHost,String postTitle, String content)
 	{
-		this.blogHost = blogHost;
+		this.blogPostHost = blogPostHost;
 		this.postTitle = postTitle;
 		this.content = content;
 		postDate = new Date();

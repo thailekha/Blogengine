@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import play.db.jpa.Blob;
 import play.db.jpa.Model;
 
 @Entity
@@ -15,16 +16,23 @@ public class User extends Model {
 	public List<Blog> blogs;
 	@OneToMany
 	public List<Comment> commentsUser;
-//	@OneToMany
-//	public List<Page> pages;
+	@OneToMany
+	public List<Page> pages;
 	
-	public String name;
+	public String firstName;
+	public String lastName;
 	public String email;
+	public int age;
 	public String password;
 	
-	public User(String name, String email, String password) {
-		this.name = name;
+	public Blob profilePicture;
+	
+	public User(String firstName, String lastName, String email, int age, String password) 
+	{
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.email = email;
+		this.age = age;
 		this.password = password;
 	}
 	

@@ -2,11 +2,15 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import models.Blog;
+import models.Page;
 import models.Post;
 import models.User;
+import play.Logger;
+import play.test.Fixtures;
 import play.test.UnitTest;
 
 public class BlogTest extends UnitTest {
@@ -14,10 +18,16 @@ public class BlogTest extends UnitTest {
 	private User tom;
 	private Blog blog1, blog2;
 	
+	@BeforeClass
+	  public static void loadDB()
+	  {
+	    Fixtures.deleteAllModels();
+	  }
+	
 	@Before
 	public void setup()
 	{
-		tom = new User("tom","tom@email.com","secret");
+		tom = new User("tom","thomas","tom@email.com",10,"secret");
 		tom.save();
 		blog1 = new Blog(tom,"Blog one");
 		blog1.save();
@@ -58,29 +68,36 @@ public class BlogTest extends UnitTest {
 	}
 	
 	@Test
-	public void testBlogThatHasPosts()
+	public void testCreateAndDeleteBlogThatHasPosts()
 	{
-//		Post post1 = new Post(blog1,"Post one", "Content one");
-//		post1.save();
-//		Post post2 = new Post(blog1,"Post two", "Content two");
-//		post2.save();
-//		
-//		Blog blogOne = (Blog) Blog.findAll().get(0);
-//		assertEquals(blogOne.posts.size(), 2);	
-		
 		Blog blog4 = new Blog(tom,"Blog four");
 		blog4.save();
 		Post post3 = new Post(blog4, "Post three", "Content three");
 		post3.save();
-		assertEquals(Post.findAll().size(), 1);
+		Post post4 = new Post(blog4,"Post four","Content four");
+		post4.save();
+		assertEquals(Post.findAll().size(), 2);
+		Page page = new Page(blog4, "page", "page content");
+		page.save();
 		
 		Blog blogFour = Blog.find("byBlogTitle", "Blog four").first();
-		post3.delete();
-		blogFour.delete();
-		assertEquals(Blog.findAll().size(),2);
+		assertNotNull(blogFour);
+		assertNotNull(Page.find("byBlogPageHost", blogFour).first());
 		
-//		post1.delete();
-//		post2.delete();
+		page.delete();
+		post3.delete();
+		post4.delete();
+		blog4.delete();
+		assertEquals(Blog.findAll().size(),2);
 	}
 
+	@Test
+	public void testUpdateBlog()
+	{
+		blog1.blogTitle = "Edited title";
+		blog1.save();
+		
+		Blog blogOne = Blog.find("byBlogTitle", "Edited title").first();
+		assertNotNull(blogOne);
+	}
 }
