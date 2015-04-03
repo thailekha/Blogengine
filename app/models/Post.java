@@ -22,14 +22,14 @@ public class Post extends Model {
 	public String postTitle;
 	
 	@Lob
-	public String content;
+	public String postContent;
 	public Date postDate;
 	
-	public Post(Blog blogPostHost,String postTitle, String content)
+	public Post(Blog blogPostHost,String postTitle, String postContent)
 	{
 		this.blogPostHost = blogPostHost;
 		this.postTitle = postTitle;
-		this.content = content;
+		this.postContent = postContent;
 		postDate = new Date();
 	}
 }

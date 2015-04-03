@@ -68,7 +68,7 @@ public class BlogTest extends UnitTest {
 	}
 	
 	@Test
-	public void testCreateAndDeleteBlogThatHasPosts()
+	public void testCreateAndDeleteBlogWithPostAndPage()
 	{
 		Blog blog4 = new Blog(tom,"Blog four");
 		blog4.save();
@@ -96,8 +96,12 @@ public class BlogTest extends UnitTest {
 	{
 		blog1.blogTitle = "Edited title";
 		blog1.save();
+		blog2.blogTitle = "";
+		blog2.save();
 		
 		Blog blogOne = Blog.find("byBlogTitle", "Edited title").first();
+		Blog blogTwo = Blog.find("byBlogTitle", "").first();
 		assertNotNull(blogOne);
+		assertNotNull(blogTwo);
 	}
 }

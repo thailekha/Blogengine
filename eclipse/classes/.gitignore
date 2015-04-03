@@ -6,3 +6,7 @@
 /controllers/
 /data.yml
 /models/
+/PostTest.class
+/PageTest.class
+/CommentTest.class
+/SubCommentTest.class
