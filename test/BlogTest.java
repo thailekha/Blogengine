@@ -77,7 +77,7 @@ public class BlogTest extends UnitTest {
 		Post post4 = new Post(blog4,"Post four","Content four");
 		post4.save();
 		assertEquals(Post.findAll().size(), 2);
-		Page page = new Page(blog4, "page", "page content");
+		Page page = new Page(blog4, "page", "page content","link");
 		page.save();
 		
 		Blog blogFour = Blog.find("byBlogTitle", "Blog four").first();

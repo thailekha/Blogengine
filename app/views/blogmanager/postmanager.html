@@ -1,0 +1,18 @@
+#{extends 'main.html' /}
+#{set title:'Posts' /}
+#{homenavigation /}
+<section class="ui two column grid">
+	<div class="two wide column">
+		#{blognavigation id:"postnav", blog:"${blog.id}"/}
+	</div>
+	<div class="fourteen wide column">
+		#{createform buttontext:"New Post", action:"/blog/${blog.id}/newpost", parameter:"postTitle", content:"content", contentparam:"postContent" /}
+	
+		<div class="ui segment">
+			#{list items:blog.posts, as:'post'}
+				<a class="ui header" href="/blog/${blog.id}/post/${post.id}">${post.postTitle}</a>
+				<br>
+			#{/list}
+		</div>
+	</div>
+</section>

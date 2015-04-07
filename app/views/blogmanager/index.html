@@ -1,0 +1,8 @@
+#{extends 'main.html' /}
+#{set title:'Blog' /}
+#{homenavigation /}
+<section class="ui two column grid">
+	<div class="two wide column">
+		#{blognavigation id:"blogmanager", blog:"${blog.id}"/}
+	</div>
+</section>

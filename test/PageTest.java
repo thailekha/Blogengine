@@ -41,9 +41,9 @@ public class PageTest extends UnitTest {
 	@Test
 	public void testCreateAndDeletePage()
 	{
-		Page page1 = new Page(blog,"title 1","content 1");
+		Page page1 = new Page(blog,"title 1","content 1","link 1");
 		page1.save();
-		Page page2 = new Page(blog,"title 2","content 2");
+		Page page2 = new Page(blog,"title 2","content 2","link 2");
 		page2.save();
 		assertEquals(Page.findAll().size(),2);		
 		
@@ -66,7 +66,7 @@ public class PageTest extends UnitTest {
 	@Test 
 	public void testUpdatePage()
 	{
-		Page page = new Page(blog,"title","content");
+		Page page = new Page(blog,"title","content","link");
 		page.save();
 		
 		Blog golb = Blog.find("byBlogTitle", "Blog one").first();

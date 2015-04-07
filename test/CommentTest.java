@@ -35,7 +35,7 @@ public class CommentTest extends UnitTest {
 		bob.save();
 		blog = new Blog(tom,"Blog one");
 		blog.save();
-		page = new Page(blog,"title page","content page");
+		page = new Page(blog,"title page","content page","link");
 		page.save();
 		post = new Post(blog,"title post","content post");
 		post.save();

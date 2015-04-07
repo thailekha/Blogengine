@@ -95,7 +95,7 @@ public class UserTest extends UnitTest {
 		Post post = new Post(blog,"spike's post","post content");
 		post.save();
 		Logger.info("Posts: " + Post.find("byBlogPostHost", blog).fetch().size());
-		Page page = new Page(blog, "spike's page", "page content");
+		Page page = new Page(blog, "spike's page", "page content","link");
 		page.save();
 		
 		Comment commentPost = new Comment(post,spike,"post comment");

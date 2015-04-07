@@ -22,6 +22,12 @@ public class Accounts extends Controller {
     	render();
     }
     
+    public static void logout()
+    {
+    	session.clear();
+    	index();
+    }
+    
     public static void register(String firstName,
     		String lastName, String email, int age, String password) {
     	User user = new User(firstName,lastName,email,age,password);
@@ -38,10 +44,22 @@ public class Accounts extends Controller {
     {
     	User user = findByEmail(email);
     	if((user != null) && (user.checkPassword(password))) {
+    		session.put("logged_in_userid", user.id);
     		Home.index();
     	}
     	else {
     		index();
+    	}
+    }
+    
+    public static User getLoggedInUser()
+    {
+    	if(session.contains("logged_in_userid")) {
+    		return User.findById(Long.parseLong(session.get("logged_in_userid")));
+    	}
+    	else {
+    		login();
+    		return null;
     	}
     }
 }

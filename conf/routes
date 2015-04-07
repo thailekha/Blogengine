@@ -7,8 +7,21 @@ GET     /                                       Accounts.index
 GET		/signup									Accounts.signup
 POST	/register								Accounts.register
 GET		/login									Accounts.login
+GET		/logout									Accounts.logout
 POST	/authenticate							Accounts.authenticate
+
 GET		/home									Home.index
+POST	/newblog								Home.newBlog
+GET		/blog/{id}								BlogManager.index
+GET		/blog/{id}/posts						BlogManager.postManager
+GET		/blog/{id}/pages						BlogManager.pageManager
+POST	/blog/{id}/newpost						BlogManager.createPost
+POST	/blog/{id}/newpage						BlogManager.createPage
+
+GET		/blog/{id}/post/{postId}				PostRender.index
+POST	/blog/post/comment/{postId}				PostRender.commentPost
+
+GET		/page/{pageLink}						PageRender.index(pageLink)
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

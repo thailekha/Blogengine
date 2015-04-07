@@ -8,6 +8,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import play.Logger;
 import play.db.jpa.Model;
 
 @Entity
@@ -31,5 +32,11 @@ public class Post extends Model {
 		this.postTitle = postTitle;
 		this.postContent = postContent;
 		postDate = new Date();
+		Logger.info("New post: " + postTitle);
+	}
+	
+	public void newCommentPost(User commenter, String commentText)
+	{
+		commentsPost.add((Comment) new Comment(this,commenter,commentText).save()); 
 	}
 }

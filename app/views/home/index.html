@@ -1,6 +1,16 @@
 #{extends 'main.html' /}
 #{set title:'Home page' /}
-#{navigation /}
+#{homenavigation /}
 <section class="ui segment">
-	#{include "components/createblog.html" /}
+	<h1 class="ui blue header">${user.firstName + " " + user.lastName}'s blogs</h1>
+	<br>
+	#{createform buttontext:"New Blog", action:"/newblog", parameter:"blogTitle" /}
+	
+	#{list items:user.blogs, as:'blog'}
+		<br>
+		<a class="ui blue header" href="/blog/${blog.id}">
+			<i class="right triangle icon"></i>
+			${blog.blogTitle}
+		</a>
+	#{/list}
 </section>
