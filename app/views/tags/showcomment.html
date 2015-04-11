@@ -1,41 +1,63 @@
-<!-- #{a @Home.index()}Back home #{/a} -->
-
-<div class="ui comments">
-		<h3 class="ui dividing header">Comments</h3>
-		#{list items:param.commentsPost, as:'comment'}
-			<div class="comment">
-        		<a class="avatar">
-          			<img src="/images/avatar/small/jenny.jpg">
-        		</a>
-        	<div class="content">
-         		<a class="author">${comment.commenter.firstName} ${comment.commenter.lastName}</a>
-          		<div class="metadata">
-            		<span class="date">Just now</span>
-          		</div>
-          		<div class="text">
-            		${comment.commentText}
-          		</div>
-          		<div class="actions">
-            		<a class="reply">Reply</a>
-          		</div>
-        	</div>
-      		</div>
-		#{/list}
-	</div>	
-	<div class="ui grid">
+<div class="${_class}">
+	#{list items:_comments, as:'comment'}
+		<div class="comment">
+       		<a class="avatar">
+       			<img src="/images/avatar/small/jenny.jpg">
+       		</a>
+       	<div class="content">
+        	<a class="author">
+        		#{if _mode.equals("comment")}
+        			${comment.commenter.firstName + " " + comment.commenter.lastName}
+        		#{/if}
+        		#{else}
+        			${comment.subCommenter.firstName + " " + comment.subCommenter.lastName}
+        		#{/else}
+        	</a>
+         	<div class="metadata">
+           		<span class="date">Just now</span>
+         	</div>
+         	<div class="text">
+           		#{if _mode.equals("comment")}
+        			${comment.commentText}
+        		#{/if}
+        		#{else}
+        			${comment.subCommentText}
+        		#{/else}
+         	</div>
+         	<div class="actions">
+           		<a id="replyhyperlink${comment.id}" class="reply">Reply</a>
+           		#{if _mode.equals("comment")}
+        			<a href="/blog/post/deletecomment/${comment.id}">Delete</a>
+        		#{/if}
+           		#{else}
+        			<a href="/blog/post/deletereply/${comment.id}">Delete</a>
+        		#{/else}
+         	</div>
+       	</div>
+       	#{if _mode.equals("comment")}
+       		#{showcomment class:"comments", type:"subcomment",subform:"subform",
+       		 comments:comment.subComments , textparam:"subCommentText",
+       		commentaction:"/blog/replycomment/${comment.id}", subid:comment.id /}
+       	#{/if}
+     		</div>
+	#{/list}
+</div>	
+<div class="ui grid">
 	<div class="eight wide column">
-	<form class="ui reply form" action="" method="POST">
-    	<div class="field">
-      		<textarea name="commentText"></textarea>
-    	</div>
-    	<button class="ui blue labeled submit icon button">
-      		<i class="icon edit"></i> Add Reply
-    	</button>
-  	</form>
-  	</div>
-  	</div>
-  	
+		<form id="${_subform}${_type}${_subid}" class="ui reply form" action="${_commentaction}" method="POST">
+   			<div class="field">
+     			<textarea name="${_textparam}"></textarea>
+   			</div>
+   			<button class="ui blue labeled submit icon button">
+     			<i class="icon edit"></i> Add Reply
+   			</button>
+ 		</form>
+ 	</div>
+ </div>
+ 	
 <script>
-	$(":contains('param')").val(${_param});
-	$("form").attr(action, ${_action});
+	$("#subform${_type}${_subid}").hide();
+	$("#replyhyperlink${_subid}").click(function() {
+		$("#subform${_type}${_subid}").toggle(600);
+	});
 </script>

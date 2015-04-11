@@ -17,6 +17,8 @@ public class User extends Model {
 	@OneToMany
 	public List<Comment> commentsUser;
 	@OneToMany
+	public List<SubComment> replies;
+	@OneToMany
 	public List<Page> pages;
 	
 	public String firstName;

@@ -12,16 +12,27 @@ POST	/authenticate							Accounts.authenticate
 
 GET		/home									Home.index
 POST	/newblog								Home.newBlog
+GET		/deleteblog/{id}						Home.deleteBlog
+
 GET		/blog/{id}								BlogManager.index
 GET		/blog/{id}/posts						BlogManager.postManager
 GET		/blog/{id}/pages						BlogManager.pageManager
 POST	/blog/{id}/newpost						BlogManager.createPost
 POST	/blog/{id}/newpage						BlogManager.createPage
+POST	/blog/{id}/editpost/{postId}			BlogManager.editPost
+POST	/blog/{id}/editpage/{pageId}			BlogManager.editPage
 
-GET		/blog/{id}/post/{postId}				PostRender.index
-POST	/blog/post/comment/{postId}				PostRender.commentPost
+GET		/blogview/{blogId}						BlogManager.blogView
 
-GET		/page/{pageLink}						PageRender.index(pageLink)
+GET		/blog/{id}/post/{postId}				BlogManager.postView
+POST	/blog/post/comment/{postId}				BlogManager.commentPost
+POST	/blog/replycomment/{commentId}			BlogManager.replyComment
+GET		/blog/post/deletecomment/{commentId}	BlogManager.deleteComment
+GET		/blog/post/deletereply/{replyId}		BlogManager.deleteReplyComment
+
+GET		/page/{pageLink}						BlogManager.pageView(pageLink)
+
+GET		/profile								Profile.index
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

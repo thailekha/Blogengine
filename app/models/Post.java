@@ -34,9 +34,4 @@ public class Post extends Model {
 		postDate = new Date();
 		Logger.info("New post: " + postTitle);
 	}
-	
-	public void newCommentPost(User commenter, String commentText)
-	{
-		commentsPost.add((Comment) new Comment(this,commenter,commentText).save()); 
-	}
 }

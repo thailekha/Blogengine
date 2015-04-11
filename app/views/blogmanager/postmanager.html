@@ -3,16 +3,23 @@
 #{homenavigation /}
 <section class="ui two column grid">
 	<div class="two wide column">
-		#{blognavigation id:"postnav", blog:"${blog.id}"/}
+		#{blognavigation id:"postnav", blog:blog /}
 	</div>
 	<div class="fourteen wide column">
-		#{createform buttontext:"New Post", action:"/blog/${blog.id}/newpost", parameter:"postTitle", content:"content", contentparam:"postContent" /}
+		#{createform buttontext:"New Post", action:"/blog/${blog.id}/newpost", 
+		titleparam:"postTitle", contentparam:"postContent", 
+		buttonmessage:"Create Post" , object:blog /}
 	
 		<div class="ui segment">
 			#{list items:blog.posts, as:'post'}
 				<a class="ui header" href="/blog/${blog.id}/post/${post.id}">${post.postTitle}</a>
+				#{createform buttontext:"Edit", action:"/blog/${blog.id}/editpost/${post.id}", 
+				titleparam:"postTitle", contentparam:"postContent", 
+				buttonmessage:"Update", type:"post" , object:post /}
 				<br>
 			#{/list}
 		</div>
 	</div>
 </section>
+
+#{texteditor /}

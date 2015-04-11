@@ -73,6 +73,7 @@ public class PostTest extends UnitTest {
 		Post mirrorPost = Post.find("byPostTitle", "new title").first();
 		assertNotNull(mirrorPost);
 		assertEquals(mirrorPost.postContent, "content");
+		assertEquals(mirrorPost.blogPostHost,blog);
 		
 		post.delete();
 	}

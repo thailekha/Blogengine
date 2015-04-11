@@ -1,4 +1,16 @@
 #{extends 'main.html' /}
-#{set title:'Profile' /}
-#{navigation /}
+#{set title:'Profile page' /}
+#{homenavigation /}
 
+<section class="ui segment">
+	<h1 class="ui header" >
+		<a id="firstname">${user.firstName}</a>
+		<a id="lastname">${user.lastName}</a>
+		's Profile
+	</h1>
+		#{editprofile form:"firstnameform", param:"firstName",
+		component:"firstname", message:"Edit first name" /}
+		#{editprofile form:"lastnameform", param:"lastName",
+		component:"lastname", message:"Edit last name" /}
+     #{include "components/profiledetails.html" /} 
+</section>

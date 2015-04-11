@@ -4,7 +4,7 @@
 <section class="ui segment">
 	<h1 class="ui blue header">${user.firstName + " " + user.lastName}'s blogs</h1>
 	<br>
-	#{createform buttontext:"New Blog", action:"/newblog", parameter:"blogTitle" /}
+	#{blogform /}
 	
 	#{list items:user.blogs, as:'blog'}
 		<br>
@@ -12,5 +12,6 @@
 			<i class="right triangle icon"></i>
 			${blog.blogTitle}
 		</a>
+		<a class="ui button" href="/deleteblog/${blog.id}">Delete</a>
 	#{/list}
 </section>

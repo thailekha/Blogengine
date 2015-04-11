@@ -1,71 +1,40 @@
-<div class="ui segment">
-	<button id="showbutton" class="ui small inverted block header"></button>
-	<form class="ui form" action="" method="POST">
-	<div id="link" class="field">
-		<input id="inputlink" placeholder="Page Link" type="text" name="">
-	</div>
-	<div class="field">
-		<input id="inputtitle" placeholder="Title" type="text" name="">
-		<textarea id="content" name="" placeholder="Content"></textarea>
-	</div>
-	<button id="submitbutton" class="ui blue button">Create</button>
-	</form>
+<button id="showbutton${_type}${_object.id}" class="ui label"></button>
+<form id="form${_type}${_object.id}" class="ui form" action="" method="POST">
+<div class="field">
+	<input id="inputlink${_type}${_object.id}" placeholder="Page Link" type="text" name="">
 </div>
+<div class="field">
+	<input id="inputtitle${_type}${_object.id}" placeholder="Title" type="text" name="">
+	<textarea id="content${_type}${_object.id}" name="" placeholder="Content"></textarea>
+</div>
+<button id="submitbutton${_type}${_object.id}" class="ui blue button"></button>
+<button id="draftbutton${_type}${_object.id}" class="ui blue button">Save Draft</button>
+</form>
+
 
 <script>
-	$("#link").hide();
-	$("textarea").hide();
-	$("#showbutton").text("${_buttontext}");
-	$(".form").attr("action", "${_action}");
-	$("#inputtitle").attr("name", "${_parameter}");
-	$(".form").hide();
-	$("#showbutton").click(function() {
-		$(".form").toggle(500);
+	$("#showbutton${_type}${_object.id}").text("${_buttontext}");	
+	$("#form${_type}${_object.id}").attr("action", "${_action}");
+	$("#inputlink${_type}${_object.id}").hide();
+	if ("${_needlink}" == "true") {
+		$("#inputlink${_type}${_object.id}").show();
+	}
+	$("#inputlink${_type}${_object.id}").attr("name", "${_linkparam}");
+	$("#inputtitle${_type}${_object.id}").attr("name", "${_titleparam}");
+	$("#content${_type}${_object.id}").attr("name", "${_contentparam}");
+	$("#submitbutton${_type}${_object.id}").text("${_buttonmessage}");
+	$("#form${_type}${_object.id}").hide();
+	$("#showbutton${_type}${_object.id}").click(function() {
+		$("#form${_type}${_object.id}").toggle(500);
 	});
 	
-	$("#${_link}").show();
-	$("#inputlink").attr("name", "${_linkparam}")
-	$("#${_content}").show();
-	$("#${_content}").attr("name", "${_contentparam}");
-	
-	$("#submitbutton").attr("disabled",true);
-	$("#inputtitle").keypress(function(){
+	$("#submitbutton${_type}${_object.id}").attr("disabled",true);
+	$("#inputtitle${_type}${_object.id}").keypress(function(){
 		if($(this).val().length != 0) {
-			$("#submitbutton").attr("disabled",false);
+			$("#submitbutton${_type}${_object.id}").attr("disabled",false);
 		}
 		else {
-			$("#submitbutton").attr("disabled",true);
+			$("#submitbutton${_type}${_object.id}").attr("disabled",true);
 		}
 	});
-	
-// 	$("#submitbutton").bind("click", function(){
-// 		if($("#inputtitle").val().length === 0) {
-// 			$("#submitbutton").attr("disabled",true);
-// 			alert("Error: empty title");
-// 		} else {
-// 			$("#submitbutton").attr("disabled",false);
-// 			submit();
-// 		}
-// 	});
-</script>
-
-<script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
-<script>
-tinymce.init({
-    selector: "textarea",
-    theme: "modern",
-    plugins: [
-        "lists link image print preview pagebreak",
-        "searchreplace wordcount visualblocks visualchars code fullscreen",
-        "insertdatetime nonbreaking save table contextmenu directionality",
-        "emoticons template paste textcolor colorpicker textpattern"
-    ],
-    toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-    toolbar2: "preview | forecolor backcolor emoticons",
-    image_advtab: true,
-    templates: [
-        {title: 'Test template 1', content: 'Test 1'},
-        {title: 'Test template 2', content: 'Test 2'}
-    ]
-});
 </script>

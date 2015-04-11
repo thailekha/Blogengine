@@ -1,0 +1,35 @@
+  <div class="ui medium image">
+    <h5 class="ui header">Thumbail Image</h5>
+    <img src="/profile/getthumbnail/${user.id}">
+  </div>
+  <section class="ui form">
+    <form action="/profile/uploadthumbnail/${user.id}" method="post" enctype="multipart/form-data">     
+      <div class="ui field">
+        <input type="file" name="picture"></input> 
+     </div>     
+     <button class="ui submit button"> Upload</button>       
+    </form>        
+  </section>   
+
+  <table class="ui inverted table segment">
+    <thead>
+      <tr>
+        <th id="useremail">Email</th>
+        <th id="userage">Age</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+        	<a>${user.email}</a>
+        	#{editprofile form:"emailform", param:"email",
+			component:"useremail", message:"Edit email" /}
+        </td>
+        <td>
+        	<a>${user.age}</a>
+        	#{editprofile form:"ageform", param:"age",
+			component:"userage", message:"Edit age" /}
+        </td>
+      </tr>
+    </tbody>
+  </table>

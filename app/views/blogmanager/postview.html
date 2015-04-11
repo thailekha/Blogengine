@@ -1,0 +1,22 @@
+#{extends 'main.html' /}
+#{set title:'Post view' /}
+#{homenavigation /}
+
+<section class="ui segment">
+	<a href="/blogview/${post.blogPostHost.id}" class="ui block header">${post.blogPostHost.blogTitle}</a>
+	<h3 class="ui header">${post.postTitle}</h3>
+	<p>${post.postContent}
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<h3 class="ui dividing header">Comments</h3>	
+	#{showcomment class:"ui comments", comments:post.commentsPost , mode:"comment",
+	textparam:"commentText" , commentaction:"/blog/post/comment/${post.id}" /}
+</section>
+
+<!-- HTML nodes stored in string needed to be "decoded" -->
+<script>
+$("p").html($("p").text());
+</script>

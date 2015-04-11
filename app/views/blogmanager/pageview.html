@@ -1,0 +1,17 @@
+#{extends 'main.html' /}
+#{set title:'Page view' /}
+#{homenavigation /}
+<section class="ui segment">
+	<a href="/blogview/${page.blogPageHost.id}" class="ui block header">${page.blogPageHost.blogTitle}</a>
+	<h1 class="ui header">${page.pageTitle}</h1>
+	<p> ${page.pageContent}
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+</section>
+
+<script>
+$("p").html($("p").text());
+</script>

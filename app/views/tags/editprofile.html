@@ -1,0 +1,15 @@
+<div id="${_form}" class="ui compact segment">
+	<form class="ui form" action="" method="POST">
+		<div class="field">
+			<input type="text" name="${_param}">
+		</div>
+		<button class="ui small blue button">${_message}</button>
+	</form>
+</div>
+
+<script>
+$("#${_form}").hide();
+	$("#${_component}").click(function() {
+		$("#${_form}").toggle(500);
+	});
+</script>

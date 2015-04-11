@@ -1,0 +1,21 @@
+#{extends 'main.html' /}
+#{set title:'Blog view' /}
+#{homenavigation /}
+<section class="ui grid segment">
+<div class="eight wide column">
+	<a class="ui block header">${blog.blogTitle}</a>
+	#{list items:blog.posts, as:'post'}
+		<h3 class="ui block header">${post.postTitle}</h3>
+		<p> ${post.postContent} </p>
+	#{/list}
+</div>
+</section>
+
+<!-- HTML nodes stored in string needed to be "decoded" -->
+<!-- If there are more than 1 post, there will be problem that 2 <p> tags 
+get "HTML"-ed, leading to double amount of post content rendered ==> use for-each loop -->
+<script>
+$("p").each(function(){
+	$(this).html($(this).text());
+});
+</script>
