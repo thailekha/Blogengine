@@ -17,7 +17,7 @@ public class Post extends Model {
 	@ManyToOne
 	public Blog blogPostHost;
 	
-	@OneToMany
+	@OneToMany(mappedBy="postHost")
 	public List<Comment> commentsPost;
 	
 	public String postTitle;
@@ -25,13 +25,15 @@ public class Post extends Model {
 	@Lob
 	public String postContent;
 	public Date postDate;
+	public boolean isDraft;
 	
-	public Post(Blog blogPostHost,String postTitle, String postContent)
+	public Post(Blog blogPostHost,String postTitle, String postContent, boolean isDraft)
 	{
 		this.blogPostHost = blogPostHost;
 		this.postTitle = postTitle;
 		this.postContent = postContent;
 		postDate = new Date();
+		this.isDraft = isDraft;
 		Logger.info("New post: " + postTitle);
 	}
 }

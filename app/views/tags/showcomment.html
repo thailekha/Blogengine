@@ -25,8 +25,8 @@
         		#{/else}
          	</div>
          	<div class="actions">
-           		<a id="replyhyperlink${comment.id}" class="reply">Reply</a>
            		#{if _mode.equals("comment")}
+           			<a id="replyhyperlink${comment.id}" class="reply">Reply</a>
         			<a href="/blog/post/deletecomment/${comment.id}">Delete</a>
         		#{/if}
            		#{else}

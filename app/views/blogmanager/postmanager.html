@@ -1,25 +1,67 @@
 #{extends 'main.html' /}
 #{set title:'Posts' /}
 #{homenavigation /}
+<script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+<script src="@{'/public/javascripts/createform.js'}"></script>
 <section class="ui two column grid">
 	<div class="two wide column">
 		#{blognavigation id:"postnav", blog:blog /}
 	</div>
 	<div class="fourteen wide column">
-		#{createform buttontext:"New Post", action:"/blog/${blog.id}/newpost", 
-		titleparam:"postTitle", contentparam:"postContent", 
-		buttonmessage:"Create Post" , object:blog /}
+		<div id="createsection" class="ui segment">
+			<button class="ui button" onclick=
+				"append('createsection','createform','/blog/${blog.id}/newpost','POST','postTitle','postContent')">New post</button>
+			<br><br>
+		</div>
 	
 		<div class="ui segment">
 			#{list items:blog.posts, as:'post'}
+			#{if !(post.isDraft)}
+			<div id="editsection${post.id}">
 				<a class="ui header" href="/blog/${blog.id}/post/${post.id}">${post.postTitle}</a>
-				#{createform buttontext:"Edit", action:"/blog/${blog.id}/editpost/${post.id}", 
-				titleparam:"postTitle", contentparam:"postContent", 
-				buttonmessage:"Update", type:"post" , object:post /}
+				<button class="ui button" onclick=
+				"append('editsection${post.id}','form${post.id}','/blog/${blog.id}/editpost/${post.id}',
+						'POST')">Edit</button>
+				<br><br>
 				<br>
+			</div>
+			#{/if}
 			#{/list}
+		</div>
+	</div>
+	
+	<div class="ui modal">
+		<div class="header">
+    		Drafts
+  		</div>
+  		<div class="content">
+		#{list items:blog.posts, as:'post'}
+		#{if post.isDraft}
+			<button id="drafttitle${post.id}">${post.postTitle}</button>
+			
+		<div class="description">
+			<p id="draftcontent${post.id}">${post.postContent}</p>
+		</div>
+		
+		<script>
+		$(function(){
+			$("#drafttitle${post.id}").click(function(){
+				//alert($("#draftcontent${post.id}").text());
+				$("#inputtitle${blog.id}").val("${post.postTitle}");
+				$("#content${blog.id}").text($("#draftcontent${post.id}").text());
+				$(".modal").hide(500);
+				$("#form${blog.id}").show(500);
+			});
+		});
+		</script>
+		#{/if}
+		#{/list}
 		</div>
 	</div>
 </section>
 
-#{texteditor /}
+<script>
+	$("#showdraft").click(function(){
+		$(".modal").toggle(500);
+	});
+</script>

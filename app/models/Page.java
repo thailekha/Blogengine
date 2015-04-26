@@ -15,15 +15,12 @@ import play.db.jpa.Model;
 public class Page extends Model {
 
 	public String pageLink;
-	
-	@ManyToOne
-	public Blog blogPageHost;
-	
-	@OneToMany
-	public List<Comment> commentsPage;
-	
 	public String pageTitle;
 	
+	@ManyToOne
+	public Blog blogPageHost;	
+	@OneToMany(mappedBy="pageHost")
+	public List<Comment> commentsPage;		
 	@Lob
 	public String pageContent;
 	

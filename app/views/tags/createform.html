@@ -4,8 +4,8 @@
 	<input id="inputlink${_type}${_object.id}" placeholder="Page Link" type="text" name="">
 </div>
 <div class="field">
-	<input id="inputtitle${_type}${_object.id}" placeholder="Title" type="text" name="">
-	<textarea id="content${_type}${_object.id}" name="" placeholder="Content"></textarea>
+	<input id="inputtitle${_type}${_object.id}" placeholder="${_prevtitle}" type="text" name="">
+	<textarea id="content${_type}${_object.id}" name="" placeholder="Content">${_prevcontent}</textarea>
 </div>
 <button id="submitbutton${_type}${_object.id}" class="ui blue button"></button>
 <button id="draftbutton${_type}${_object.id}" class="ui blue button">Save Draft</button>
@@ -14,7 +14,8 @@
 
 <script>
 	$("#showbutton${_type}${_object.id}").text("${_buttontext}");	
-	$("#form${_type}${_object.id}").attr("action", "${_action}");
+	$("#draftbutton${_type}${_object.id}").hide();
+	$("#${_draft}${_type}${_object.id}").show();
 	$("#inputlink${_type}${_object.id}").hide();
 	if ("${_needlink}" == "true") {
 		$("#inputlink${_type}${_object.id}").show();
@@ -28,13 +29,21 @@
 		$("#form${_type}${_object.id}").toggle(500);
 	});
 	
-	$("#submitbutton${_type}${_object.id}").attr("disabled",true);
+	$("#submitbutton${_type}${_object.id}").hover(function() {
+		$("#form${_type}${_object.id}").attr("action", "${_action}");
+	});
+	$("#draftbutton${_type}${_object.id}").hover(function() {
+		$("#form${_type}${_object.id}").attr("action", "${_draftaction}");
+	});
+	
+	
+	$("#submitbutton${_type}${_object.id} , #draftbutton${_type}${_object.id}").attr("disabled",true);
 	$("#inputtitle${_type}${_object.id}").keypress(function(){
 		if($(this).val().length != 0) {
-			$("#submitbutton${_type}${_object.id}").attr("disabled",false);
+			$("#submitbutton${_type}${_object.id} , #draftbutton${_type}${_object.id}").attr("disabled",false);
 		}
 		else {
-			$("#submitbutton${_type}${_object.id}").attr("disabled",true);
+			$("#submitbutton${_type}${_object.id} , #draftbutton${_type}${_object.id}").attr("disabled",true);
 		}
 	});
 </script>

@@ -72,9 +72,9 @@ public class BlogTest extends UnitTest {
 	{
 		Blog blog4 = new Blog(tom,"Blog four");
 		blog4.save();
-		Post post3 = new Post(blog4, "Post three", "Content three");
+		Post post3 = new Post(blog4, "Post three", "Content three",false);
 		post3.save();
-		Post post4 = new Post(blog4,"Post four","Content four");
+		Post post4 = new Post(blog4,"Post four","Content four",false);
 		post4.save();
 		assertEquals(Post.findAll().size(), 2);
 		Page page = new Page(blog4, "page", "page content","link");

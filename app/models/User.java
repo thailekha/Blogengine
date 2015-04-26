@@ -12,14 +12,12 @@ import play.db.jpa.Model;
 @Entity
 public class User extends Model {
 	
-	@OneToMany
+	@OneToMany(mappedBy="blogOwner")
 	public List<Blog> blogs;
-	@OneToMany
+	@OneToMany(mappedBy="commenter")
 	public List<Comment> commentsUser;
-	@OneToMany
+	@OneToMany(mappedBy="subCommenter")
 	public List<SubComment> replies;
-	@OneToMany
-	public List<Page> pages;
 	
 	public String firstName;
 	public String lastName;
@@ -45,9 +43,6 @@ public class User extends Model {
 	
 	public void newBlog(String blogTitle)
 	{
-//		Blog blog = new Blog(this, blogTitle);
-//		blog.save();
-//		blogs.add(blog);
 		blogs.add((Blog) new Blog(this,blogTitle).save());
 	}
 }

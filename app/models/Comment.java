@@ -3,6 +3,7 @@ package models;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -22,7 +23,7 @@ public class Comment extends Model {
 	@ManyToOne
 	public User commenter;
 	
-	@OneToMany
+	@OneToMany (mappedBy="commentHost", cascade=CascadeType.ALL)
 	public List<SubComment> subComments;
 	
 	public String commentText;

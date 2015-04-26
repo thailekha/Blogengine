@@ -43,7 +43,7 @@ public class PostTest extends UnitTest {
 	@Test
 	public void testCreatePost()
 	{
-		Post post = new Post(blog,"title","content");
+		Post post = new Post(blog,"title","content",false);
 		post.save();
 		
 		Post tsop = Post.find("byPostContent", "content").first();
@@ -51,7 +51,7 @@ public class PostTest extends UnitTest {
 		assertNotNull(tsop);
 		assertEquals(tsop.blogPostHost,golb);
 		
-		Post aPost = new Post(blog,"title 2", "content 2");
+		Post aPost = new Post(blog,"title 2", "content 2",false);
 		aPost.save();
 		List<Post> posts = Post.findAll();
 		assertEquals(posts.size(), 2);
@@ -63,7 +63,7 @@ public class PostTest extends UnitTest {
 	@Test
 	public void testUpdatePost()
 	{
-		Post post = new Post(blog,"title","content");
+		Post post = new Post(blog,"title","content",false);
 		post.save();
 		
 		Post tsop = Post.find("byPostContent", "content").first();
@@ -81,9 +81,9 @@ public class PostTest extends UnitTest {
 	@Test
 	public void testDeletePost()
 	{
-		Post post = new Post(blog,"title","content");
+		Post post = new Post(blog,"title","content",false);
 		post.save();
-		Post aPost = new Post(blog,"title 2", "content 2");
+		Post aPost = new Post(blog,"title 2", "content 2",false);
 		aPost.save();
 		
 		assertEquals(Post.findAll().size(),2);

@@ -4,16 +4,44 @@
 
 <section class="ui segment">
 	<a href="/blogview/${post.blogPostHost.id}" class="ui block header">${post.blogPostHost.blogTitle}</a>
-	<h3 class="ui header">${post.postTitle}</h3>
-	<p>${post.postContent}
+	<h3 id="title" class="ui header">${post.postTitle}</h3>
+	<p id="content">${post.postContent}</p>
 	<br>
 	<br>
 	<br>
 	<br>
 	<br>
+	<button onclick="update()">Click me</button>
+	<script>
+	var update = function() {
+		var xhr;
+		if(window.XMLHttpRequest) {
+			xhr = new XMLHttpRequest();
+		}
+		else {
+			xhr = new ActiveXObject("Microsoft.XMLHTTP");
+		}		
+		xhr.open("GET","/update/${post.id}",true);
+		xhr.send();
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState==4) 
+			{
+				var jpost = JSON.parse(xhr.responseText);
+				alert(jpost);
+				var post = JSON.parse(jpost);
+				alert(post);
+				//document.getElementById("content").innerHTML = post;
+				document.getElementById("title").innerHTML = post.postTitle;
+				document.getElementById("content").innerHTML = post.postContent;
+			}
+		}
+	};
+	</script>
+	
 	<h3 class="ui dividing header">Comments</h3>	
 	#{showcomment class:"ui comments", comments:post.commentsPost , mode:"comment",
 	textparam:"commentText" , commentaction:"/blog/post/comment/${post.id}" /}
+	
 </section>
 
 <!-- HTML nodes stored in string needed to be "decoded" -->

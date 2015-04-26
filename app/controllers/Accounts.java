@@ -10,7 +10,8 @@ import models.*;
 public class Accounts extends Controller {
 
     public static void index() {
-        render();
+    	List<Post> posts = Post.findAll(); 
+        render(posts);
     }
     
     public static void signup() {

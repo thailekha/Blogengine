@@ -1,3 +1,4 @@
+
 package controllers;
 
 import java.util.Collections;
@@ -5,11 +6,14 @@ import java.util.List;
 
 import models.Blog;
 import models.Comment;
+import models.Draft;
 import models.Page;
 import models.Post;
 import models.SubComment;
 import models.User;
+import play.Logger;
 import play.mvc.Controller;
+import utility.JsonParsers;
 
 public class BlogManager extends Controller {
 
@@ -34,7 +38,16 @@ public class BlogManager extends Controller {
 	public static void createPost(Long id,String postTitle, String postContent)
 	{
 		Blog blog = Blog.findById(id);
-		blog.newPost(postTitle, postContent);
+		blog.newPost(postTitle, postContent,false);
+		blog.save();
+		postManager(id);
+	}
+	
+
+	public static void newPostDraft(Long id, String postTitle,String postContent)
+	{
+		Blog blog = Blog.findById(id);
+		blog.newPost(postTitle, postContent,true);
 		blog.save();
 		postManager(id);
 	}
@@ -86,34 +99,62 @@ public class BlogManager extends Controller {
 		render(post);
 	}
 	
-	public static void commentPost(Long postId, String commentText)
+//	public static void newPageDraft(Long id,String pageLink, String pageTitle,String pageContent)
+//	{
+//		Blog blog = Blog.findById(id);
+//		blog.pageDrafts.add((Draft) new Draft(blog,pageLink,pageTitle,pageContent).save());
+//		blog.save();
+//		index(blog.id);
+//	}
+	
+//-----------------------------------------------------------------------	
+	
+	public static void newComment(Long postId,Long pageId,String commentText)
 	{
 		User commenter = Accounts.getLoggedInUser();
-		Post postHost = Post.findById(postId);
-		
-		Comment comment = new Comment(postHost,commenter,commentText);
-		comment.save();
-		commenter.commentsUser.add(comment);
-		commenter.save();
-		postHost.commentsPost.add(comment);
-		postHost.save();
-		
-		postView(postId);
+		if(postId != null) {
+			Post postHost = Post.findById(postId);
+			Comment comment = new Comment(postHost,commenter,commentText);
+			comment.save();
+			commenter.commentsUser.add(comment);
+			commenter.save();
+			postHost.commentsPost.add(comment);
+			postHost.save();
+			
+			postView(postId);
+		} 
+		else {
+			Page pageHost = Page.findById(pageId);
+			Comment comment = new Comment(pageHost,commenter,commentText);
+			comment.save();
+			commenter.commentsUser.add(comment);
+			commenter.save();
+			pageHost.commentsPage.add(comment);
+			pageHost.save();
+			
+			pageView(pageHost.pageLink);
+		}
 	}
 	
 	public static void deleteComment(Long commentId)
 	{
 		Comment comment = Comment.findById(commentId);
+		removeComment(commentId);
+		
+		if(comment.postHost != null) {
+			postView(comment.postHost.id);
+		}
+		else {
+			pageView(comment.pageHost.pageLink);
+		}
+	}
+	
+	private static void removeComment(Long commentId)
+	{
+		Comment comment = Comment.findById(commentId);
 		List<SubComment> repliesFromComment = SubComment.find("byCommentHost", comment).fetch();
 		for(SubComment reply: repliesFromComment) {
-			Comment commentHost = reply.commentHost;
-			commentHost.subComments.remove(reply);
-			commentHost.save();
-			User replier = reply.subCommenter;
-			replier.replies.remove(reply);
-			replier.save();
-			
-			reply.delete();
+			removeReply(reply.id);
 		}
 		
 		User commenter = comment.commenter;
@@ -125,16 +166,16 @@ public class BlogManager extends Controller {
 			post.commentsPost.remove(comment);
 			post.save();
 			comment.delete();
-			postView(post.id);
 		}
 		else {
 			Page page = comment.pageHost;
 			page.commentsPage.remove(comment);
 			page.save();
 			comment.delete();
-			pageView(page.pageLink);
 		}
 	}
+	
+//-----------------------------------------------------------------------	
 	
 	public static void replyComment(Long commentId, String subCommentText)
 	{
@@ -160,15 +201,8 @@ public class BlogManager extends Controller {
 	public static void deleteReplyComment(Long replyId)
 	{
 		SubComment reply = SubComment.findById(replyId);
-		
 		Comment commentHost = reply.commentHost;
-		commentHost.subComments.remove(reply);
-		commentHost.save();
-		User replier = reply.subCommenter;
-		replier.replies.remove(reply);
-		replier.save();
-		
-		reply.delete();
+		removeReply(replyId);
 		
 		if(commentHost.postHost != null) {
 			postView(commentHost.postHost.id);
@@ -176,5 +210,25 @@ public class BlogManager extends Controller {
 		else {
 			pageView(commentHost.pageHost.pageLink);
 		}
+	}
+	
+	private static void removeReply(Long replyId)
+	{
+		SubComment reply = SubComment.findById(replyId);
+		Comment commentHost = reply.commentHost;
+		commentHost.subComments.remove(reply);
+		commentHost.save();
+		User replier = reply.subCommenter;
+		replier.replies.remove(reply);
+		replier.save();
+		reply.delete();
+	}
+	
+//----------------------------------------------------------------------
+	
+	public static void getRecentPost(Long id)
+	{
+		Post post = Post.findById(id);
+		renderJSON(JsonParsers.postToJson(post));
 	}
 }

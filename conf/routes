@@ -19,18 +19,23 @@ GET		/blog/{id}/posts						BlogManager.postManager
 GET		/blog/{id}/pages						BlogManager.pageManager
 POST	/blog/{id}/newpost						BlogManager.createPost
 POST	/blog/{id}/newpage						BlogManager.createPage
+POST	/blog/{id}/newpostdraft					BlogManager.newPostDraft
+POST	/blog/{id}/newpagedraft					BlogManager.newPageDraft
 POST	/blog/{id}/editpost/{postId}			BlogManager.editPost
 POST	/blog/{id}/editpage/{pageId}			BlogManager.editPage
 
 GET		/blogview/{blogId}						BlogManager.blogView
 
 GET		/blog/{id}/post/{postId}				BlogManager.postView
-POST	/blog/post/comment/{postId}				BlogManager.commentPost
+GET		/update/{id}							BlogManager.getRecentPost
+
+POST	/blog/post/comment/{postId}				BlogManager.newComment
+POST	/page/comment/{pageId}					BlogManager.newComment
 POST	/blog/replycomment/{commentId}			BlogManager.replyComment
 GET		/blog/post/deletecomment/{commentId}	BlogManager.deleteComment
 GET		/blog/post/deletereply/{replyId}		BlogManager.deleteReplyComment
 
-GET		/page/{pageLink}						BlogManager.pageView(pageLink)
+GET		/page/{pageLink}						BlogManager.pageView
 
 GET		/profile								Profile.index
 

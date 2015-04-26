@@ -35,7 +35,7 @@ public class SubCommentTest extends UnitTest {
 		bob.save();
 		blog = new Blog(tom,"Blog one");
 		blog.save();
-		post = new Post(blog,"title post","content post");
+		post = new Post(blog,"title post","content post",false);
 		post.save();
 		comment = new Comment(post,tom,"tom comment");
 		comment.save();

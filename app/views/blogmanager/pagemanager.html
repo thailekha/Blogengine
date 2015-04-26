@@ -6,7 +6,8 @@
 		#{blognavigation id:"pagenav", blog:blog /}
 	</div>
 	<div class="fourteen wide column">
-		#{createform buttontext:"New Page", action:"/blog/${blog.id}/newpage", 
+		#{createform buttontext:"New Page", draft:"draftbutton",
+		action:"/blog/${blog.id}/newpage", draftaction:"/blog/${blog.id}/newpagedraft",
 		needlink:"true" , linkparam:"pageLink", 
 		titleparam:"pageTitle", contentparam:"pageContent", 
 		buttonmessage:"Create Page", object:blog /}
@@ -14,10 +15,12 @@
 		<div class="ui segment">
 			#{list items:blog.pages, as:'page'}
 				<a class="ui header" href="/page/${page.pageLink}">${page.pageTitle}</a>
-				#{createform buttontext:"Edit", action:"/page/${page.pageLink}", 
+				#{createform buttontext:"Edit", 
+				action:"/page/${page.pageLink}",
 				needlink:"true" , linkparam:"pageLink",
 				titleparam:"pageTitle", contentparam:"pageContent",
-				buttonmessage:"Update Page", type:"page", object:page /}
+				buttonmessage:"Update Page", type:"page", object:page, 
+				prevtitle:page.pageTitle, prevcontent:page.pageContent /}
 				<br>
 			#{/list}
 		</div>

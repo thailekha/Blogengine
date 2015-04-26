@@ -14,12 +14,15 @@ public class Blog extends Model {
 
 	@ManyToOne
 	public User blogOwner;
-	
-	@OneToMany
+	@OneToMany(mappedBy="blogPostHost")
 	public List<Post> posts;
+	@OneToMany(mappedBy="blogPageHost")
+	public List<Page> pages;
 	
 	@OneToMany
-	public List<Page> pages;
+	public List<Draft> postDrafts;
+//	@OneToMany
+//	public List<Draft> pageDrafts;
 	
 	public String blogTitle;
 	public Date blogDate;
@@ -31,9 +34,9 @@ public class Blog extends Model {
 		blogDate = new Date();
 	}
 	
-	public void newPost(String postTitle,String postContent)
+	public void newPost(String postTitle,String postContent,boolean isDraft)
 	{
-		posts.add((Post) new Post(this,postTitle,postContent).save());
+		posts.add((Post) new Post(this,postTitle,postContent,isDraft).save());
 		Logger.info("Posts size: " + posts.size());
 	}
 	
