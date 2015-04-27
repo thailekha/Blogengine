@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="0.28" errors="0" skipped="0" tests="3" name="BlogTest">
-  <testcase classname="BlogTest" name="testUpdateBlog" time="0.222">
+<testsuite failures="0" time="0.124" errors="0" skipped="0" tests="3" name="BlogTest">
+  <testcase classname="BlogTest" name="testUpdateBlog" time="0.081">
       </testcase>
-  <testcase classname="BlogTest" name="testCreateAndDeleteBlogWithPostAndPage" time="0.046">
+  <testcase classname="BlogTest" name="testCreateAndDeleteBlogWithPostAndPage" time="0.037">
       </testcase>
-  <testcase classname="BlogTest" name="testCreateAndDeleteBlog" time="0.012">
+  <testcase classname="BlogTest" name="testCreateAndDeleteBlog" time="0.006">
       </testcase>
 </testsuite>

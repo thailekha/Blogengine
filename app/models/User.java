@@ -1,9 +1,11 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import play.db.jpa.Blob;
@@ -12,12 +14,18 @@ import play.db.jpa.Model;
 @Entity
 public class User extends Model {
 	
+	@OneToMany(mappedBy="target")
+	public List<Followship> followers;
+	@OneToMany(mappedBy="source")
+	public List<Followship> followings;	
 	@OneToMany(mappedBy="blogOwner")
 	public List<Blog> blogs;
 	@OneToMany(mappedBy="commenter")
 	public List<Comment> commentsUser;
 	@OneToMany(mappedBy="subCommenter")
 	public List<SubComment> replies;
+	@OneToMany(mappedBy="updater")
+	public List<Update> newsFeed;
 	
 	public String firstName;
 	public String lastName;

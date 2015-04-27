@@ -1,7 +1,6 @@
 #{extends 'main.html' /}
 #{set title:'Posts' /}
 #{homenavigation /}
-<script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
 <script src="@{'/public/javascripts/createform.js'}"></script>
 <section class="ui two column grid">
 	<div class="two wide column">
@@ -10,7 +9,8 @@
 	<div class="fourteen wide column">
 		<div id="createsection" class="ui segment">
 			<button class="ui button" onclick=
-				"append('createsection','createform','/blog/${blog.id}/newpost','POST','postTitle','postContent')">New post</button>
+				"append('createsection','create','/blog/${blog.id}/newpost',
+						'POST','postTitle','postContent','Create Post')">New post</button>
 			<br><br>
 		</div>
 	
@@ -20,8 +20,8 @@
 			<div id="editsection${post.id}">
 				<a class="ui header" href="/blog/${blog.id}/post/${post.id}">${post.postTitle}</a>
 				<button class="ui button" onclick=
-				"append('editsection${post.id}','form${post.id}','/blog/${blog.id}/editpost/${post.id}',
-						'POST')">Edit</button>
+				"append('editsection${post.id}','edit','/blog/${blog.id}/editpost/${post.id}',
+						'POST','postTitle','postContent','Edit Post',false,true,'${post.id}')">Edit</button>
 				<br><br>
 				<br>
 			</div>

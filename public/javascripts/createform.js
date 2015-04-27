@@ -1,33 +1,41 @@
-var append = function(secId,formId,action,method,titleParam,contentParam,needLink,object)
+var route;
+var id;
+
+var append = function(secId,type,action,method,titleParam,contentParam,buttonMsg,needLink,manualRequest,postId)
 {
-	var existedForm = document.getElementById(formId);
+	route = action;
+	id = postId;
+	alert(id);
+	var existedForm = document.getElementById(type + postId);
 	if(existedForm == null) {
-		
 		var form = document.createElement("form");
 		form.setAttribute("class","ui form");
-		form.setAttribute("id",formId);
-		form.setAttribute("action",action);
-		form.setAttribute("method",method);
-		
+		form.setAttribute("id", type + postId);		
+		if(!manualRequest) {
+			form.setAttribute("action",action);	
+			form.setAttribute("method",method);
+		}
 		if(needLink) {
 			form.innerHTML = '<div class="field">\ ' + 
 			' <input id="" placeholder="Page Link" type="text" name="">\ </div>\ ';
 		}
-		
 		form.innerHTML +=
 		' <div class="field">\ '+ 
-		' <input placeholder="" type="text" name=' + titleParam + '></input>\ ' + 
-		' <textarea id="" name=' + contentParam + ' placeholder="Content"></textarea>\ </div>\ ' + 
-		' <button id="submitbutton" class="ui blue button">Create Post</button>\ ' + 
-		' <button id="draftbutton" class="ui blue button">Save Draft</button>\ '; 
+		' <input id="title' + type +  postId + '" placeholder="Title" type="text" name=' + titleParam + '></input>\ ' + 
+		' <textarea id="content' + type +  postId + '" name=' + contentParam + ' placeholder="Content"></textarea>\ </div>\ ' + 
+		' <button id="draftbutton" class="ui blue button">Save Draft</button>\ ';
 		
+		if(manualRequest) {
+			form.innerHTML += ' <button class="ui blue button" onclick="manuReq()"> ' + buttonMsg + '</button>';
+		}
 		
 		document.getElementById(secId).appendChild(form);
-		$('#' + formId).hide();
-		$('#' + formId).show(600);
+		$('#' + type +  postId).hide();
+		$('#' + type +  postId).show(600);
+		
 	}
 	else {
-		$('#'+formId).toggle(600);
+		$('#' + type + postId).toggle(600);
 	}
 	
 
@@ -52,3 +60,21 @@ var append = function(secId,formId,action,method,titleParam,contentParam,needLin
 	});
 };
 
+var manuReq = function() 
+{
+	var titleId = "titleedit" + id;
+	var nTitle = $('#' + titleId).val();	
+	var nContent = tinyMCE.get("contentedit" + id).getContent();
+	alert('Post id:' + id + ', ' + nTitle + ' ' + nContent);
+	var date = new Date().toDateString();
+	var xhr;
+	if(window.XMLHttpRequest) {
+		xhr = new XMLHttpRequest();
+	}
+	else {
+		xhr = new ActiveXObject("Microsoft.XMLHTTP");
+	}	
+	xhr.open("POST",route,true);
+	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xhr.send("idToEdit=" + id + "&nTitle=" + nTitle + "&nContent=" + nContent + "&date=" + date);
+}

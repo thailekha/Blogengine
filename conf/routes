@@ -39,6 +39,8 @@ GET		/page/{pageLink}						BlogManager.pageView
 
 GET		/profile								Profile.index
 
+POST	/checkupdate							BlogManager.checkUpdate
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

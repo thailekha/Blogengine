@@ -20,6 +20,9 @@ public class Post extends Model {
 	@OneToMany(mappedBy="postHost")
 	public List<Comment> commentsPost;
 	
+	@OneToMany
+	public List<Update> updates;
+	
 	public String postTitle;
 	
 	@Lob

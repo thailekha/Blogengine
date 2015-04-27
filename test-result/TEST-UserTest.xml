@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="0.055" errors="0" skipped="0" tests="4" name="UserTest">
-  <testcase classname="UserTest" name="testCreateUser" time="0.012">
+<testsuite failures="0" time="0.047" errors="0" skipped="0" tests="4" name="UserTest">
+  <testcase classname="UserTest" name="testCreateUserWithBlogPagePostCommentSubComment" time="0.031">
       </testcase>
-  <testcase classname="UserTest" name="testUpdateUser" time="0.007">
+  <testcase classname="UserTest" name="testCreateUser" time="0.005">
       </testcase>
-  <testcase classname="UserTest" name="testDeleteUser" time="0.006">
+  <testcase classname="UserTest" name="testUpdateUser" time="0.006">
       </testcase>
-  <testcase classname="UserTest" name="testCreateUserWithBlogPagePostCommentSubComment" time="0.03">
+  <testcase classname="UserTest" name="testDeleteUser" time="0.005">
       </testcase>
 </testsuite>

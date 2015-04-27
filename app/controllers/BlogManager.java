@@ -10,6 +10,7 @@ import models.Draft;
 import models.Page;
 import models.Post;
 import models.SubComment;
+import models.Update;
 import models.User;
 import play.Logger;
 import play.mvc.Controller;
@@ -52,12 +53,22 @@ public class BlogManager extends Controller {
 		postManager(id);
 	}
 	
-	public static void editPost(Long postId,String postTitle,String postContent)
+	public static void editPost(Long idToEdit,String nTitle,String nContent,String date)
 	{
-		Post post = Post.findById(postId);
-		post.postTitle = postTitle;
+		Post post = Post.findById(idToEdit);
+		Logger.info("Post to update: " + post.postTitle);
+		if(!post.postTitle.equals(nTitle) || !(post.postContent).equals(nContent)) {
+			User postOwner = post.blogPostHost.blogOwner;
+			Update update = new Update(postOwner,post,nTitle,nContent,date);
+			update.save();
+			postOwner.newsFeed.add(update);
+			postOwner.save();
+			post.updates.add(update);
+			post.save();
+		}
+		post.postTitle = nTitle;
 		post.save();
-		post.postContent = postContent;
+		post.postContent = nContent;
 		post.save();
 		postManager(post.blogPostHost.id);
 	}
@@ -230,5 +241,12 @@ public class BlogManager extends Controller {
 	{
 		Post post = Post.findById(id);
 		renderJSON(JsonParsers.postToJson(post));
+	}
+	
+	public static void checkUpdate(Long id, String nTitle, String nContent, String date)
+	{
+		Post post = Post.findById(id);
+		Logger.info("Post: " + post.postTitle +", new title: " 
+		+ nTitle + ", new content: " + nContent + ", date: " + date);
 	}
 }
