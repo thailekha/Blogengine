@@ -1,16 +1,21 @@
-<div class="ui segment">
-	<button id="showbutton" class="ui small inverted block header">New Blog</button>
+<div id="makeblog" class="ui segment">
+	<button id="showbutton" class="ui button">New Blog</button>
+	<br><br>
 	<form class="ui form" action="/newblog" method="POST">
 		<div class="field">
 			<input id="inputtitle" placeholder="Title" type="text" name="blogTitle">
 		</div>
-		<button id="submitbutton" class="ui blue button">Create blog</button>
+	<button id="submitbutton" class="ui blue button">Create blog</button>
 	</form>
 </div>
-
 <script>
 $(".form").hide();
-	$("#showbutton").click(function() {
-		$(".form").toggle(500);
-	});
+$("#showbutton").click(function() {
+	$(".form").toggle(500);
+});
+$('#makeblog').hover(function(){
+	$('#makeblog').css("background-color", "#7EB9D6");
+	}, function(){
+    $('#makeblog').css("background-color", "white");
+});
 </script>

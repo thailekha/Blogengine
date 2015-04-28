@@ -53,13 +53,13 @@ public class BlogManager extends Controller {
 		postManager(id);
 	}
 	
-	public static void editPost(Long idToEdit,String nTitle,String nContent,String date)
+	public static void editPost(Long idToEdit,String nTitle,String nContent)
 	{
 		Post post = Post.findById(idToEdit);
 		Logger.info("Post to update: " + post.postTitle);
 		if(!post.postTitle.equals(nTitle) || !(post.postContent).equals(nContent)) {
 			User postOwner = post.blogPostHost.blogOwner;
-			Update update = new Update(postOwner,post,nTitle,nContent,date);
+			Update update = new Update(postOwner,post,nTitle,nContent);
 			update.save();
 			postOwner.newsFeed.add(update);
 			postOwner.save();

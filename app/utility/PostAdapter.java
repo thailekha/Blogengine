@@ -9,7 +9,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
-public class PointAdapter extends TypeAdapter<Post> {
+public class PostAdapter extends TypeAdapter<Post> {
 
 	@Override
 	public Post read(JsonReader reader) throws IOException {
@@ -29,7 +29,7 @@ public class PointAdapter extends TypeAdapter<Post> {
 	       }
 		//long postid = post.id;
 		String jpost = "{" + "\"postTitle\": " + "\"" + post.postTitle + "\""
-				+ "," + "\"postContent\": " + "\"" + post.postContent+ "\"" + "}";
+				+ "," + "\"postContent\": " + "\"" + StringNeutraliser.wipeQuotes(post.postContent) + "\"" + "}";
 		//writer.value(postid);
 		writer.value(jpost);
 	}

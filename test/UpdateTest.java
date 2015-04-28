@@ -36,9 +36,9 @@ public class UpdateTest extends UnitTest {
 		blog.save();
 		post = new Post(blog,"title","content",false);
 		post.save();
-		update1 = new Update(tom,post,post.postTitle + " first",post.postContent + " first","date first");
+		update1 = new Update(tom,post,post.postTitle + " first",post.postContent + " first");
 		update1.save();
-		update2 = new Update(tom,post,post.postTitle + " second",post.postContent + " second","date second");
+		update2 = new Update(tom,post,post.postTitle + " second",post.postContent + " second");
 		update2.save();
 	}
 	
@@ -66,11 +66,9 @@ public class UpdateTest extends UnitTest {
 		assertEquals(mirUpdate1.belong,post);
 		assertEquals(mirUpdate1.nTitle,"title first");
 		assertEquals(mirUpdate1.nContent,"content first");
-		assertEquals(mirUpdate1.date,"date first");
 		
 		assertEquals(mirUpdate2.belong,post);
 		assertEquals(mirUpdate2.nTitle,"title second");
 		assertEquals(mirUpdate2.nContent,"content second");
-		assertEquals(mirUpdate2.date,"date second");
 	}
 }

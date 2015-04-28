@@ -5,7 +5,6 @@ var append = function(secId,type,action,method,titleParam,contentParam,buttonMsg
 {
 	route = action;
 	id = postId;
-	alert(id);
 	var existedForm = document.getElementById(type + postId);
 	if(existedForm == null) {
 		var form = document.createElement("form");
@@ -64,9 +63,10 @@ var manuReq = function()
 {
 	var titleId = "titleedit" + id;
 	var nTitle = $('#' + titleId).val();	
+	var contentId = "contentedit" + id;
+	//var nContent = $('#' + contentId).val();
 	var nContent = tinyMCE.get("contentedit" + id).getContent();
 	alert('Post id:' + id + ', ' + nTitle + ' ' + nContent);
-	var date = new Date().toDateString();
 	var xhr;
 	if(window.XMLHttpRequest) {
 		xhr = new XMLHttpRequest();
@@ -76,5 +76,6 @@ var manuReq = function()
 	}	
 	xhr.open("POST",route,true);
 	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xhr.send("idToEdit=" + id + "&nTitle=" + nTitle + "&nContent=" + nContent + "&date=" + date);
+	xhr.send("idToEdit=" + id + "&nTitle=" + nTitle + "&nContent=" + nContent);
+	alert("Content: " + nContent);
 }

@@ -13,6 +13,9 @@ POST	/authenticate							Accounts.authenticate
 GET		/home									Home.index
 POST	/newblog								Home.newBlog
 GET		/deleteblog/{id}						Home.deleteBlog
+GET		/follow/{id}							Home.follow
+GET		/unfollow/{id}							Home.unfollow
+GET		/newsfeed								Home.newsFeed
 
 GET		/blog/{id}								BlogManager.index
 GET		/blog/{id}/posts						BlogManager.postManager

@@ -7,6 +7,6 @@
 	#{/if}
 	
 	#{list items:posts, as:'post'}
-	<a class="ui header" href="/blog/${blog.id}/post/${post.id}">${post.postTitle}</a>
+	<a class="ui header" href="/blog/${post.blogPostHost.id}/post/${post.id}">${post.postTitle}</a>
 	#{/list}
 </section>

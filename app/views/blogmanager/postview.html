@@ -28,8 +28,10 @@
 			{
 				var jpost = JSON.parse(xhr.responseText);
 				alert(jpost);
-				var post = JSON.parse(jpost);
+				console.log(jpost);
+				var post = jQuery.parseJSON(jpost.replace(/\n/g,""));
 				alert(post);
+				console.log(post);
 				//document.getElementById("content").innerHTML = post;
 				document.getElementById("title").innerHTML = post.postTitle;
 				document.getElementById("content").innerHTML = post.postContent;

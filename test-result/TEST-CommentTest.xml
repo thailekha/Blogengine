@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<testsuite failures="0" time="0.035" errors="0" skipped="0" tests="1" name="CommentTest">
-  <testcase classname="CommentTest" name="testCreateAndDeleteComment" time="0.035">
+<testsuite failures="0" time="0.029" errors="0" skipped="0" tests="1" name="CommentTest">
+  <testcase classname="CommentTest" name="testCreateAndDeleteComment" time="0.029">
       </testcase>
 </testsuite>
