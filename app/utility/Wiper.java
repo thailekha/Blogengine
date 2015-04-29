@@ -25,6 +25,42 @@ import models.User;
  */
 public class Wiper {
 	
+	public static void removeDatabase()
+	{
+		List<SubComment> replies = SubComment.findAll();
+		for(SubComment reply: replies) {
+			removeReply(reply.id);
+		}
+		List<Comment> comments = Comment.findAll();
+		for(Comment comment: comments) {
+			removeComment(comment.id);
+		}
+		List<Page> pages = Page.findAll();
+		for(Page page: pages) {
+			removePage(page.id);
+		}
+		List<Update> updates = Update.findAll();
+		for(Update update: updates) {
+			removeUpdate(update.id);
+		}
+		List<Post> posts = Post.findAll();
+		for(Post post: posts) {
+			removePost(post.id);
+		}
+		List<Blog> blogs = Blog.findAll();
+		for(Blog blog: blogs) {
+			removeBlog(blog.id);
+		}
+		List<Followship> follows = Followship.findAll();
+		for(Followship follow: follows) {
+			removeFollowship(follow.id);
+		}
+		List<User> users = User.findAll();
+		for(User user: users)	{
+			removeUser(user.id);
+		}
+	}
+	
 	/*
      * Note: user can make a comment and subcomment on a
      * page or post that does not belong to him/her.
@@ -58,15 +94,18 @@ public class Wiper {
 	
 	public static void removeFollowship(Long id)
 	{
-		User followed = User.findById(id);
-		User source = Accounts.getLoggedInUser();
-		Followship followshipToRemove = null;
-		for(Followship follow: source.followings)
-		{
-			if(follow.source.equals(source) && follow.target.equals(followed)) {
-				followshipToRemove = follow;
-			}
-		}
+//		User followed = User.findById(id);
+//		User source = Accounts.getLoggedInUser();
+//		Followship followshipToRemove = null;
+//		for(Followship follow: source.followings)
+//		{
+//			if(follow.source.equals(source) && follow.target.equals(followed)) {
+//				followshipToRemove = follow;
+//			}
+//		}
+		Followship followshipToRemove = Followship.findById(id);
+		User followed = followshipToRemove.target;
+		User source = followshipToRemove.source;		
 		source.followings.remove(followshipToRemove);
 		source.save();
 		followed.followers.remove(followshipToRemove);

@@ -9,6 +9,7 @@ POST	/register								Accounts.register
 GET		/login									Accounts.login
 GET		/logout									Accounts.logout
 POST	/authenticate							Accounts.authenticate
+GET		/resetdb								Accounts.deleteAll
 
 # Home page
 GET		/home									Home.index
