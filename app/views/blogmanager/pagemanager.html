@@ -1,27 +1,31 @@
 #{extends 'main.html' /}
 #{set title:'Pages' /}
 #{homenavigation /}
+<script src="@{'/public/javascripts/createform.js'}"></script>
 <section class="ui two column grid">
 	<div class="two wide column">
 		#{blognavigation id:"pagenav", blog:blog /}
 	</div>
 	<div class="fourteen wide column">
-		#{createform buttontext:"New Page", draft:"draftbutton",
-		action:"/blog/${blog.id}/newpage", draftaction:"/blog/${blog.id}/newpagedraft",
-		needlink:"true" , linkparam:"pageLink", 
-		titleparam:"pageTitle", contentparam:"pageContent", 
-		buttonmessage:"Create Page", object:blog /}
+		<div id="createsection" class="ui segment">
+			<button class="ui button" onclick=
+				"append('createsection','create','/blog/${blog.id}/newpage',
+						'POST','pageTitle','pageContent','Create Page','',true,'pageLink',false)">New page</button>
+			<br><br>
+		</div>
 		
 		<div class="ui segment">
 			#{list items:blog.pages, as:'page'}
+			<div id="editsection${page.id}">
 				<a class="ui header" href="/page/${page.pageLink}">${page.pageTitle}</a>
-				#{createform buttontext:"Edit", 
-				action:"/page/${page.pageLink}",
-				needlink:"true" , linkparam:"pageLink",
-				titleparam:"pageTitle", contentparam:"pageContent",
-				buttonmessage:"Update Page", type:"page", object:page, 
-				prevtitle:page.pageTitle, prevcontent:page.pageContent /}
-				<br>
+				<button class="ui tiny button" onclick=
+				"append('editsection${page.id}','edit','/blog/${blog.id}/editpage/${page.id}',
+						'POST','pageTitle','${page.pageTitle}','pageContent','${page.pageContent}','Edit Page','',true,'pageLink','${page.pageLink}',false,'${page.id}')">
+					Edit
+				</button>
+				<a href="/deletepage/${page.id}">(delete)</a>
+				<br><br><br>
+			</div>	
 			#{/list}
 		</div>
 	</div>

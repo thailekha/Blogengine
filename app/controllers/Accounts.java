@@ -2,6 +2,7 @@ package controllers;
 
 import play.*;
 import play.mvc.*;
+import utility.Wiper;
 
 import java.util.*;
 
@@ -62,5 +63,11 @@ public class Accounts extends Controller {
     		login();
     		return null;
     	}
+    }
+    
+    public static void deleteUser(Long id)
+    {
+    	Wiper.removeUser(id);
+    	index();
     }
 }

@@ -7,10 +7,14 @@ import com.google.gson.JsonElement;
 
 import models.Blog;
 import models.Followship;
+import models.Page;
+import models.Post;
 import models.Update;
 import models.User;
+import play.db.jpa.Blob;
 import play.mvc.Controller;
 import utility.JsonParsers;
+import utility.Wiper;
 
 public class Home extends Controller {
 
@@ -23,6 +27,17 @@ public class Home extends Controller {
 		render(user,others);
 	}
 	
+	public static void getPicture(Long id) 
+	  {
+	    User user = User.findById(id);
+	    Blob picture = user.profilePicture;
+	    if (picture.exists())
+	    {
+	      response.setContentTypeIfNotSet(picture.type());
+	      renderBinary(picture.get());
+	    }
+	  }
+	
 	public static void newBlog(String blogTitle)
 	{
 		User user = Accounts.getLoggedInUser();
@@ -33,11 +48,7 @@ public class Home extends Controller {
 	
 	public static void deleteBlog(Long id)
 	{
-		Blog blog = Blog.findById(id);
-		User blogOwner = blog.blogOwner;
-		blogOwner.blogs.remove(blog);
-		blogOwner.save();
-		blog.delete();
+		Wiper.removeBlog(id);
 		index();
 	}
 	
@@ -64,20 +75,7 @@ public class Home extends Controller {
 	
 	public static void unfollow(Long id)
 	{
-		User followed = User.findById(id);
-		User source = Accounts.getLoggedInUser();
-		Followship followshipToRemove = null;
-		for(Followship follow: source.followings)
-		{
-			if(follow.source.equals(source) && follow.target.equals(followed)) {
-				followshipToRemove = follow;
-			}
-		}
-		source.followings.remove(followshipToRemove);
-		source.save();
-		followed.followers.remove(followshipToRemove);
-		followed.save();
-		followshipToRemove.delete();
+		Wiper.removeFollowship(id);
 		index();
 	}
 	
@@ -89,11 +87,6 @@ public class Home extends Controller {
 		{
 			news.addAll(follow.target.newsFeed);
 		}
-//		String newsFeed = "{\n\"updates\":[\n";
-//		for(Update update: news) {
-//			newsFeed += JsonParsers.updatesToJson(update) + ",\n";
-//		}
-//		newsFeed += "]\n}";
 		ArrayList<String> newsFeed = new ArrayList<String>();
 		for(Update update: news) {
 			newsFeed.add(JsonParsers.updatesToJson(update));

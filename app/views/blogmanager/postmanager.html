@@ -10,7 +10,7 @@
 		<div id="createsection" class="ui segment">
 			<button class="ui button" onclick=
 				"append('createsection','create','/blog/${blog.id}/newpost',
-						'POST','postTitle','postContent','Create Post')">New post</button>
+						'POST','postTitle','postContent','Create Post','Save Draft')">New post</button>
 			<br><br>
 		</div>
 	
@@ -19,9 +19,12 @@
 			#{if !(post.isDraft)}
 			<div id="editsection${post.id}">
 				<a class="ui header" href="/blog/${blog.id}/post/${post.id}">${post.postTitle}</a>
-				<button class="ui button" onclick=
+				<button class="ui tiny button" onclick=
 				"append('editsection${post.id}','edit','/blog/${blog.id}/editpost/${post.id}',
-						'POST','postTitle','postContent','Edit Post',false,true,'${post.id}')">Edit</button>
+						'POST','postTitle','${post.postTitle}','postContent','${post.postContent}','Edit Post','Reverse to Draft',false,'',true,'${post.id}')">
+					Edit
+				</button>
+				<a href="/deletepost/${post.id}">(delete)</a>
 				<br><br>
 				<br>
 			</div>

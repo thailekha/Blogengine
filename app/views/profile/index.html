@@ -12,5 +12,7 @@
 		component:"firstname", message:"Edit first name" /}
 		#{editprofile form:"lastnameform", param:"lastName",
 		component:"lastname", message:"Edit last name" /}
-     #{include "components/profiledetails.html" /} 
+     #{include "components/profiledetails.html" /}
+     
+     <a href="/deleteaccount/${user.id}"><i class="red circle remove icon"></i></a>
 </section>

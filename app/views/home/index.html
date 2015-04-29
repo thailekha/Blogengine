@@ -5,6 +5,13 @@
 <div class="five wide column">
 	<h1 class="ui blue header">${user.firstName + " " + user.lastName}'s home page</h1>
 	<br>
+	<div class="ui compact segment">
+		<img src="/profilepicture/${user.id}" class="ui small image">
+		<br><br>
+		<a href="#">Following: ${user.followings.size()}</a>
+		<br>
+		<a href="#">Followers: ${user.followers.size()}</a>
+	</div>
 	#{blogform /}
 	<div id="blogsshow" class="ui segment">
 		<button onclick="showblogs()" class="ui button">Your blogs</button>
@@ -70,7 +77,7 @@ var showothers = function() {
 }
 
 $('#blogsshow').hover(function(){
-	$('#blogsshow').css("background-color", "#7C9FC2");
+	$('#blogsshow').css("background-color", "#B8E6B8");
 	}, function(){
 	$('#blogsshow').css("background-color", "white");
 });

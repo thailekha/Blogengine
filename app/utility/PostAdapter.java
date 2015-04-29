@@ -1,6 +1,7 @@
 package utility;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import models.Post;
 
@@ -29,7 +30,9 @@ public class PostAdapter extends TypeAdapter<Post> {
 	       }
 		//long postid = post.id;
 		String jpost = "{" + "\"postTitle\": " + "\"" + post.postTitle + "\""
-				+ "," + "\"postContent\": " + "\"" + StringNeutraliser.wipeQuotes(post.postContent) + "\"" + "}";
+				+ "," + "\"postContent\": " + "\"" + StringNeutraliser.wipeQuotes(post.postContent) + "\"" 
+				+ "," + "\"postDate\": " + "\"" + 
+				(new SimpleDateFormat("E dd/MM/yyyy 'at' hh:mm:ss")).format(post.postDate) + "\"" + "}";
 		//writer.value(postid);
 		writer.value(jpost);
 	}

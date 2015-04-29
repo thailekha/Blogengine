@@ -1,4 +1,5 @@
 package models;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,14 +16,9 @@ public class Blog extends Model {
 	@ManyToOne
 	public User blogOwner;
 	@OneToMany(mappedBy="blogPostHost")
-	public List<Post> posts;
+	public List<Post> posts = new ArrayList<Post>();
 	@OneToMany(mappedBy="blogPageHost")
-	public List<Page> pages;
-	
-	@OneToMany
-	public List<Draft> postDrafts;
-//	@OneToMany
-//	public List<Draft> pageDrafts;
+	public List<Page> pages = new ArrayList<Page>();
 	
 	public String blogTitle;
 	public Date blogDate;

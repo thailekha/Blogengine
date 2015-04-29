@@ -1,40 +1,45 @@
 var route;
 var id;
 
-var append = function(secId,type,action,method,titleParam,contentParam,buttonMsg,needLink,manualRequest,postId)
+var append = function(secId,type,action,method,titleParam,prevTitle,contentParam,prevContent,sButtonMsg,dButtonMsg,needLink,linkParam,prevLink,manualRequest,pId)
 {
 	route = action;
-	id = postId;
-	var existedForm = document.getElementById(type + postId);
+	id = pId;
+	var existedForm = document.getElementById(type + pId);
 	if(existedForm == null) {
 		var form = document.createElement("form");
 		form.setAttribute("class","ui form");
-		form.setAttribute("id", type + postId);		
+		form.setAttribute("id", type + pId);		
 		if(!manualRequest) {
 			form.setAttribute("action",action);	
 			form.setAttribute("method",method);
 		}
 		if(needLink) {
 			form.innerHTML = '<div class="field">\ ' + 
-			' <input id="" placeholder="Page Link" type="text" name="">\ </div>\ ';
+			' <input id="" placeholder="Page Link" type="text" name="' + linkParam + '">\ </div>\ ';
 		}
 		form.innerHTML +=
 		' <div class="field">\ '+ 
-		' <input id="title' + type +  postId + '" placeholder="Title" type="text" name=' + titleParam + '></input>\ ' + 
-		' <textarea id="content' + type +  postId + '" name=' + contentParam + ' placeholder="Content"></textarea>\ </div>\ ' + 
-		' <button id="draftbutton" class="ui blue button">Save Draft</button>\ ';
+		' <input id="title' + type +  pId + '" placeholder="Title" type="text" name=' + titleParam + '></input>\ ' + 
+		' <textarea id="content' + type +  pId + '" name=' + contentParam + ' placeholder="Content"></textarea>\ </div>\ ';
 		
+		if(!needLink) {
+			form.innerHTML += ' <button id="draftbutton" class="ui blue button">' + dButtonMsg + '</button>';
+		}
 		if(manualRequest) {
-			form.innerHTML += ' <button class="ui blue button" onclick="manuReq()"> ' + buttonMsg + '</button>';
+			form.innerHTML += ' <button class="ui blue button" onclick="manuReq()"> ' + sButtonMsg + '</button>';
+		}
+		else {
+			form.innerHTML += '<button id="submitbutton" class="ui blue button">' + sButtonMsg + '</button>';
 		}
 		
 		document.getElementById(secId).appendChild(form);
-		$('#' + type +  postId).hide();
-		$('#' + type +  postId).show(600);
+		$('#' + type +  pId).hide();
+		$('#' + type +  pId).show(600);
 		
 	}
 	else {
-		$('#' + type + postId).toggle(600);
+		$('#' + type + pId).toggle(600);
 	}
 	
 
@@ -48,9 +53,7 @@ var append = function(secId,type,action,method,titleParam,contentParam,buttonMsg
 	        "emoticons paste textcolor colorpicker textpattern"
 	    ],
 	    toolbar1: "insertfile undo redo styleselect bold italic " +
-	    		"bullist " +
-	    		"numlist link image forecolor " +
-	    		"backcolor emoticons",
+	    		"bullist numlist link image forecolor backcolor emoticons",
 	    image_advtab: true,
 	    templates: [
 	        {title: 'Test template 1', content: 'Test 1'},

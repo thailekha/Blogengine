@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class Page extends Model {
 	@ManyToOne
 	public Blog blogPageHost;	
 	@OneToMany(mappedBy="pageHost")
-	public List<Comment> commentsPage;		
+	public List<Comment> commentsPage = new ArrayList<Comment>();	
 	@Lob
 	public String pageContent;
 	

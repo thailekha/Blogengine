@@ -3,8 +3,13 @@
 #{homenavigation /}
 
 <section class="ui segment">
-	<a href="/blogview/${post.blogPostHost.id}" class="ui block header">${post.blogPostHost.blogTitle}</a>
-	<h3 id="title" class="ui header">${post.postTitle}</h3>
+	<a href="/blogview/${post.blogPostHost.id}" class="ui blue block header">${post.blogPostHost.blogTitle}</a>
+	<br><br><br>
+	<b id="title" class="ui purple header">
+		${post.postTitle}   
+	</b>
+	<a id="date" href="#">(Last edited: ${lastEdit})</a>
+	<br><br>
 	<p id="content">${post.postContent}</p>
 	<br>
 	<br>
@@ -34,6 +39,7 @@
 				console.log(post);
 				//document.getElementById("content").innerHTML = post;
 				document.getElementById("title").innerHTML = post.postTitle;
+				document.getElementById("date").innerHTML = '(Last edited: ' + post.postDate + ')';
 				document.getElementById("content").innerHTML = post.postContent;
 			}
 		}

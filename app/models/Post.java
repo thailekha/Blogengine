@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,15 +17,11 @@ public class Post extends Model {
 
 	@ManyToOne
 	public Blog blogPostHost;
-	
-	@OneToMany(mappedBy="postHost")
-	public List<Comment> commentsPost;
-	
-	@OneToMany
-	public List<Update> updates;
-	
-	public String postTitle;
-	
+	@OneToMany(mappedBy = "postHost")
+	public List<Comment> commentsPost = new ArrayList<Comment>();
+	@OneToMany(mappedBy = "belong")
+	public List<Update> updates = new ArrayList<Update>();
+	public String postTitle;	
 	@Lob
 	public String postContent;
 	public Date postDate;

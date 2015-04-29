@@ -10,13 +10,16 @@ GET		/login									Accounts.login
 GET		/logout									Accounts.logout
 POST	/authenticate							Accounts.authenticate
 
+# Home page
 GET		/home									Home.index
+GET		/profilepicture/{id}					Home.getPicture		
 POST	/newblog								Home.newBlog
 GET		/deleteblog/{id}						Home.deleteBlog
 GET		/follow/{id}							Home.follow
 GET		/unfollow/{id}							Home.unfollow
 GET		/newsfeed								Home.newsFeed
 
+# Blog
 GET		/blog/{id}								BlogManager.index
 GET		/blog/{id}/posts						BlogManager.postManager
 GET		/blog/{id}/pages						BlogManager.pageManager
@@ -26,23 +29,22 @@ POST	/blog/{id}/newpostdraft					BlogManager.newPostDraft
 POST	/blog/{id}/newpagedraft					BlogManager.newPageDraft
 POST	/blog/{id}/editpost/{postId}			BlogManager.editPost
 POST	/blog/{id}/editpage/{pageId}			BlogManager.editPage
-
 GET		/blogview/{blogId}						BlogManager.blogView
-
 GET		/blog/{id}/post/{postId}				BlogManager.postView
-GET		/update/{id}							BlogManager.getRecentPost
-
+GET		/deletepost/{id}						BlogManager.deletePost
+GET		/deletepage/{id}						BlogManager.deletePage
+GET		/page/{pageLink}						BlogManager.pageView(pageLink)
 POST	/blog/post/comment/{postId}				BlogManager.newComment
 POST	/page/comment/{pageId}					BlogManager.newComment
 POST	/blog/replycomment/{commentId}			BlogManager.replyComment
 GET		/blog/post/deletecomment/{commentId}	BlogManager.deleteComment
 GET		/blog/post/deletereply/{replyId}		BlogManager.deleteReplyComment
-
-GET		/page/{pageLink}						BlogManager.pageView
-
-GET		/profile								Profile.index
-
+GET		/update/{id}							BlogManager.getRecentPost
 POST	/checkupdate							BlogManager.checkUpdate
+
+# Profile page
+GET		/profile								Profile.index
+GET		/deleteaccount/{id}						Accounts.deleteUser
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

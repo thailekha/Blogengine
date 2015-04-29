@@ -1,12 +1,12 @@
 
 package controllers;
-
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import models.Blog;
 import models.Comment;
-import models.Draft;
 import models.Page;
 import models.Post;
 import models.SubComment;
@@ -15,6 +15,7 @@ import models.User;
 import play.Logger;
 import play.mvc.Controller;
 import utility.JsonParsers;
+import utility.Wiper;
 
 public class BlogManager extends Controller {
 
@@ -70,6 +71,8 @@ public class BlogManager extends Controller {
 		post.save();
 		post.postContent = nContent;
 		post.save();
+		post.postDate = new Date();
+		post.save();
 		postManager(post.blogPostHost.id);
 	}
 	
@@ -81,12 +84,16 @@ public class BlogManager extends Controller {
 		pageManager(id);
 	}
 	
-	public static void editPage(Long pageId,String pageTitle,String pageContent)
+	public static void editPage(Long pageId,String pageLink, String pageTitle,String pageContent)
 	{
 		Page page = Page.findById(pageId);
+		page.pageLink = pageLink;
+		page.save();
 		page.pageTitle = pageTitle;
 		page.save();
 		page.pageContent = pageContent;
+		page.save();
+		page.pageDate = new Date();
 		page.save();
 		pageManager(page.blogPageHost.id);
 	}
@@ -107,7 +114,9 @@ public class BlogManager extends Controller {
 	public static void postView(Long postId)
 	{
 		Post post = Post.findById(postId);
-		render(post);
+		String lastEdit = 
+				(new SimpleDateFormat("E dd/MM/yyyy 'at' hh:mm:ss")).format(post.postDate);
+		render(post,lastEdit);
 	}
 	
 //	public static void newPageDraft(Long id,String pageLink, String pageTitle,String pageContent)
@@ -118,8 +127,24 @@ public class BlogManager extends Controller {
 //		index(blog.id);
 //	}
 	
-//-----------------------------------------------------------------------	
+//-----------------------------------------------------------------------
 	
+	public static void deletePost(Long id)
+	{
+		Post post = Post.findById(id);
+		Blog blogHost = post.blogPostHost;
+		Wiper.removePost(id);
+		postManager(blogHost.id);
+	}
+	
+	public static void deletePage(Long id)
+	{
+		Page page = Page.findById(id);
+		Blog blogHost = page.blogPageHost;
+		Wiper.removePage(id);
+		pageManager(blogHost.id);
+	}
+
 	public static void newComment(Long postId,Long pageId,String commentText)
 	{
 		User commenter = Accounts.getLoggedInUser();
@@ -150,39 +175,22 @@ public class BlogManager extends Controller {
 	public static void deleteComment(Long commentId)
 	{
 		Comment comment = Comment.findById(commentId);
-		removeComment(commentId);
-		
+		Post post = null;	//Keep track of the host before removing
+		Page page = null;
 		if(comment.postHost != null) {
-			postView(comment.postHost.id);
+			post = comment.postHost;
 		}
 		else {
-			pageView(comment.pageHost.pageLink);
-		}
-	}
-	
-	private static void removeComment(Long commentId)
-	{
-		Comment comment = Comment.findById(commentId);
-		List<SubComment> repliesFromComment = SubComment.find("byCommentHost", comment).fetch();
-		for(SubComment reply: repliesFromComment) {
-			removeReply(reply.id);
+			page = comment.pageHost;
 		}
 		
-		User commenter = comment.commenter;
-		commenter.commentsUser.remove(comment);
-		commenter.save();
+		Wiper.removeComment(commentId);
 		
-		if(comment.postHost != null) {
-			Post post = comment.postHost;
-			post.commentsPost.remove(comment);
-			post.save();
-			comment.delete();
+		if(post != null) {
+			postView(post.id);
 		}
 		else {
-			Page page = comment.pageHost;
-			page.commentsPage.remove(comment);
-			page.save();
-			comment.delete();
+			pageView(page.pageLink);
 		}
 	}
 	
@@ -213,7 +221,7 @@ public class BlogManager extends Controller {
 	{
 		SubComment reply = SubComment.findById(replyId);
 		Comment commentHost = reply.commentHost;
-		removeReply(replyId);
+		Wiper.removeReply(replyId);
 		
 		if(commentHost.postHost != null) {
 			postView(commentHost.postHost.id);
@@ -221,18 +229,6 @@ public class BlogManager extends Controller {
 		else {
 			pageView(commentHost.pageHost.pageLink);
 		}
-	}
-	
-	private static void removeReply(Long replyId)
-	{
-		SubComment reply = SubComment.findById(replyId);
-		Comment commentHost = reply.commentHost;
-		commentHost.subComments.remove(reply);
-		commentHost.save();
-		User replier = reply.subCommenter;
-		replier.replies.remove(reply);
-		replier.save();
-		reply.delete();
 	}
 	
 //----------------------------------------------------------------------

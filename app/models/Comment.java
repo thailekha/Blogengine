@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,8 +24,8 @@ public class Comment extends Model {
 	@ManyToOne
 	public User commenter;
 	
-	@OneToMany (mappedBy="commentHost", cascade=CascadeType.ALL)
-	public List<SubComment> subComments;
+	@OneToMany (mappedBy="commentHost")
+	public List<SubComment> subComments = new ArrayList<SubComment>();
 	
 	public String commentText;
 	public Date commentDate;	

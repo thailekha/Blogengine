@@ -15,17 +15,17 @@ import play.db.jpa.Model;
 public class User extends Model {
 	
 	@OneToMany(mappedBy="target")
-	public List<Followship> followers;
+	public List<Followship> followers = new ArrayList<Followship>();
 	@OneToMany(mappedBy="source")
-	public List<Followship> followings;	
+	public List<Followship> followings = new ArrayList<Followship>();	
 	@OneToMany(mappedBy="blogOwner")
-	public List<Blog> blogs;
+	public List<Blog> blogs = new ArrayList<Blog>();
 	@OneToMany(mappedBy="commenter")
-	public List<Comment> commentsUser;
+	public List<Comment> commentsUser = new ArrayList<Comment>();
 	@OneToMany(mappedBy="subCommenter")
-	public List<SubComment> replies;
+	public List<SubComment> replies = new ArrayList<SubComment>();
 	@OneToMany(mappedBy="updater")
-	public List<Update> newsFeed;
+	public List<Update> newsFeed = new ArrayList<Update>();
 	
 	public String firstName;
 	public String lastName;
