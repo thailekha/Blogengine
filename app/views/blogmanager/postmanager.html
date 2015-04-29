@@ -10,7 +10,7 @@
 		<div id="createsection" class="ui segment">
 			<button class="ui button" onclick=
 				"append('createsection','create','/blog/${blog.id}/newpost',
-						'POST','postTitle','postContent','Create Post','Save Draft')">New post</button>
+						'POST','postTitle','','postContent','','Create Post','Save as Draft',false,'','',false,'')">New post</button>
 			<br><br>
 		</div>
 	
@@ -21,50 +21,29 @@
 				<a class="ui header" href="/blog/${blog.id}/post/${post.id}">${post.postTitle}</a>
 				<button class="ui tiny button" onclick=
 				"append('editsection${post.id}','edit','/blog/${blog.id}/editpost/${post.id}',
-						'POST','postTitle','${post.postTitle}','postContent','${post.postContent}','Edit Post','Reverse to Draft',false,'',true,'${post.id}')">
-					Edit
+						'POST','postTitle','${post.postTitle}','postContent',preContent('${post.id}'),'Edit Post','Reverse to Draft',false,'','',true,'${post.id}')">
+						Edit
 				</button>
 				<a href="/deletepost/${post.id}">(delete)</a>
 				<br><br>
 				<br>
 			</div>
 			#{/if}
+			<p id="prepcontent${post.id}" hidden="true">${post.postContent}</p>
 			#{/list}
 		</div>
 	</div>
 	
-	<div class="ui modal">
-		<div class="header">
-    		Drafts
-  		</div>
-  		<div class="content">
-		#{list items:blog.posts, as:'post'}
-		#{if post.isDraft}
-			<button id="drafttitle${post.id}">${post.postTitle}</button>
-			
-		<div class="description">
-			<p id="draftcontent${post.id}">${post.postContent}</p>
-		</div>
-		
-		<script>
-		$(function(){
-			$("#drafttitle${post.id}").click(function(){
-				//alert($("#draftcontent${post.id}").text());
-				$("#inputtitle${blog.id}").val("${post.postTitle}");
-				$("#content${blog.id}").text($("#draftcontent${post.id}").text());
-				$(".modal").hide(500);
-				$("#form${blog.id}").show(500);
-			});
-		});
-		</script>
-		#{/if}
-		#{/list}
-		</div>
-	</div>
 </section>
 
 <script>
 	$("#showdraft").click(function(){
 		$(".modal").toggle(500);
 	});
+	
+	var preContent = function(id)
+	{	
+		var content = $('#prepcontent'+id).text();
+		return content.replace(/\u200B/g,'');
+	}
 </script>

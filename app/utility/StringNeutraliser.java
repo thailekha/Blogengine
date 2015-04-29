@@ -23,4 +23,9 @@ public class StringNeutraliser {
 		}
 		return refined;
 	}
+	
+	public static void main(String[] agrs)
+	{
+		
+	}
 }

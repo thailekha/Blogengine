@@ -14,7 +14,20 @@
         		#{/else}
         	</a>
          	<div class="metadata">
-           		<span class="date">Just now</span>
+           		<span class="date">
+           		%{
+           			Date date = new Date();
+           			long currentDate = date.getTime();
+           			long seconds = 0;
+           			if(_mode.equals("comment")) {
+           				seconds =  ((currentDate - comment.commentDate.getTime())/1000);
+           			}
+           			else {
+           				seconds =  ((currentDate - comment.subCommentDate.getTime())/1000);
+           			}
+           		}%
+           		${seconds} seconds ago
+           		</span>
          	</div>
          	<div class="text">
            		#{if _mode.equals("comment")}
@@ -54,7 +67,7 @@
  		</form>
  	</div>
  </div>
- 	
+	
 <script>
 	$("#subform${_type}${_subid}").hide();
 	$("#replyhyperlink${_subid}").click(function() {

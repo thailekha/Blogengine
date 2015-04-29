@@ -10,9 +10,14 @@
 	<br>
 	<br>
 	<br>
-	<h3 class="ui dividing header">Comments</h3>	
-	#{showcomment class:"ui comments", comments:page.commentsPage , mode:"comment",
-	textparam:"commentText" , commentaction:"/page/comment/${page.id}" /}
+	<h3 class="ui dividing header">Comments</h3>
+	#{if publicview == 0}	
+		#{showcomment class:"ui comments", comments:page.commentsPage , mode:"comment",
+		textparam:"commentText" , commentaction:"/page/comment/${page.id}"/}
+	#{/if}
+	#{else}
+		<h4 class="ui blue header">Login to leave comments...</h4>
+	#{/else}
 </section>
 
 <script>

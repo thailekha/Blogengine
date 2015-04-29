@@ -1,10 +1,12 @@
 var route;
 var id;
+var pType;
 
-var append = function(secId,type,action,method,titleParam,prevTitle,contentParam,prevContent,sButtonMsg,dButtonMsg,needLink,linkParam,prevLink,manualRequest,pId)
+var append = function(secId,type,action,method,titleParam,prevTitle,contentParam,prevContent,sButtonMsg,dBoxMsg,needLink,linkParam,prevLink,manualRequest,pId)
 {
 	route = action;
 	id = pId;
+	pType = type;
 	var existedForm = document.getElementById(type + pId);
 	if(existedForm == null) {
 		var form = document.createElement("form");
@@ -16,18 +18,18 @@ var append = function(secId,type,action,method,titleParam,prevTitle,contentParam
 		}
 		if(needLink) {
 			form.innerHTML = '<div class="field">\ ' + 
-			' <input id="" placeholder="Page Link" type="text" name="' + linkParam + '">\ </div>\ ';
+			'<input id="" placeholder="Page Link" type="text" name="' + linkParam + '" value="' + prevLink + '"></input>\ </div>\ ';
 		}
 		form.innerHTML +=
-		' <div class="field">\ '+ 
-		' <input id="title' + type +  pId + '" placeholder="Title" type="text" name=' + titleParam + '></input>\ ' + 
-		' <textarea id="content' + type +  pId + '" name=' + contentParam + ' placeholder="Content"></textarea>\ </div>\ ';
+		'<div class="field">\ '+ 
+		'<input id="title' + type +  pId + '" placeholder="Title" type="text" name=' + titleParam + ' value="' + prevTitle + '"></input>\ ' + 
+		'<textarea id="content' + type +  pId + '" name=' + contentParam + ' placeholder="Content">' + prevContent + '</textarea>\ </div>\ ';
 		
 		if(!needLink) {
-			form.innerHTML += ' <button id="draftbutton" class="ui blue button">' + dButtonMsg + '</button>';
+			form.innerHTML += '<input id="draftcheckbox' + type +  pId + '" type="checkbox" name="toDraft" value="true">' + dBoxMsg + '</input><br><br>';
 		}
 		if(manualRequest) {
-			form.innerHTML += ' <button class="ui blue button" onclick="manuReq()"> ' + sButtonMsg + '</button>';
+			form.innerHTML += '<button class="ui blue button" onclick="manuReq()">' + sButtonMsg + '</button>';
 		}
 		else {
 			form.innerHTML += '<button id="submitbutton" class="ui blue button">' + sButtonMsg + '</button>';
@@ -35,8 +37,7 @@ var append = function(secId,type,action,method,titleParam,prevTitle,contentParam
 		
 		document.getElementById(secId).appendChild(form);
 		$('#' + type +  pId).hide();
-		$('#' + type +  pId).show(600);
-		
+		$('#' + type +  pId).show(600);		
 	}
 	else {
 		$('#' + type + pId).toggle(600);
@@ -67,9 +68,13 @@ var manuReq = function()
 	var titleId = "titleedit" + id;
 	var nTitle = $('#' + titleId).val();	
 	var contentId = "contentedit" + id;
+	var checkbox = "false";
+	if(document.getElementById("draftcheckbox" + pType +  id).checked) {
+		checkbox = "true";
+	}
 	//var nContent = $('#' + contentId).val();
 	var nContent = tinyMCE.get("contentedit" + id).getContent();
-	alert('Post id:' + id + ', ' + nTitle + ' ' + nContent);
+	//alert('Post id:' + id + ', ' + nTitle + ' ' + nContent);
 	var xhr;
 	if(window.XMLHttpRequest) {
 		xhr = new XMLHttpRequest();
@@ -79,6 +84,6 @@ var manuReq = function()
 	}	
 	xhr.open("POST",route,true);
 	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xhr.send("idToEdit=" + id + "&nTitle=" + nTitle + "&nContent=" + nContent);
-	alert("Content: " + nContent);
+	xhr.send("idToEdit=" + id + "&nTitle=" + nTitle + "&nContent=" + nContent + "&toDraft=" + checkbox);
+	//alert("Content: " + nContent);
 }

@@ -16,9 +16,8 @@
 	<br>
 	<br>
 	<br>
-	<button onclick="update()">Click me</button>
 	<script>
-	var update = function() {
+	setInterval(function() {
 		var xhr;
 		if(window.XMLHttpRequest) {
 			xhr = new XMLHttpRequest();
@@ -32,10 +31,10 @@
 			if(xhr.readyState==4) 
 			{
 				var jpost = JSON.parse(xhr.responseText);
-				alert(jpost);
+				//alert(jpost);
 				console.log(jpost);
 				var post = jQuery.parseJSON(jpost.replace(/\n/g,""));
-				alert(post);
+				//alert(post);
 				console.log(post);
 				//document.getElementById("content").innerHTML = post;
 				document.getElementById("title").innerHTML = post.postTitle;
@@ -43,13 +42,17 @@
 				document.getElementById("content").innerHTML = post.postContent;
 			}
 		}
-	};
+	},3000);
 	</script>
 	
 	<h3 class="ui dividing header">Comments</h3>	
-	#{showcomment class:"ui comments", comments:post.commentsPost , mode:"comment",
-	textparam:"commentText" , commentaction:"/blog/post/comment/${post.id}" /}
-	
+	#{if publicview == 0}
+		#{showcomment class:"ui comments", comments:post.commentsPost , mode:"comment",
+		textparam:"commentText" , commentaction:"/blog/post/comment/${post.id}"/}
+	#{/if}
+	#{else}
+		<h4 class="ui blue header">Login to leave comments...</h4>
+	#{/else}
 </section>
 
 <!-- HTML nodes stored in string needed to be "decoded" -->

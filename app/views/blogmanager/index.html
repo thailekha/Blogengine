@@ -5,4 +5,26 @@
 	<div class="two wide column">
 		#{blognavigation id:"blogmanager", blog:blog /}
 	</div>
+	%{
+		postcount = 0;
+		draftcount = 0;
+	}%
+	#{list items:blog.posts, as:'post'}
+		#{if post.isDraft}
+			postcount++;
+		#{/if}
+		#{else}
+			draftcount++;
+		#{/else}
+	#{/list}	
+	<div class="fourteen wide column">
+		<div class="ui segment">
+			<h2 class="ui teal block header">
+				${blog.blogTitle}
+			</h2>
+			<h3 class="ui blue header">Posts: ${postcount} </h3>
+			<h3 class="ui blue header">Pages: ${blog.pages.size()}</h3>
+			<h3 class="ui blue header">Drafts: ${draftcount}</h3>			
+		</div>
+	</div>
 </section>

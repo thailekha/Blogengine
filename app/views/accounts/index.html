@@ -1,12 +1,17 @@
 #{extends 'main.html' /}
-#{set title:'Home' /}
+#{set title:'Blog Engine' /}
 #{landingnavigation /}
 <section>
 	#{if posts.size() == 0}
-	<h1 class="ui header"> Sign up or login </h1>
+		<h1 class="ui blue header"> Sign up or login </h1>
 	#{/if}
-	
+	#{else}
+		<h2 class="ui blue header"> Current posts </h2>
+	#{/else}
 	#{list items:posts, as:'post'}
-	<a class="ui header" href="/blog/${post.blogPostHost.id}/post/${post.id}">${post.postTitle}</a>
+	<a class="ui header" href="/blog/${post.blogPostHost.id}/post/${post.id}">
+		<i class="teal right arrow icon"></i>${post.postTitle}
+	</a>
+	<br><br>
 	#{/list}
 </section>

@@ -1,0 +1,32 @@
+#{extends 'main.html' /}
+#{set title:'Drafts' /}
+#{homenavigation /}
+<section class="ui two column grid">
+	<div class="two wide column">
+		#{blognavigation id:"draftnav", blog:blog /}
+	</div>
+	
+	<div class="fourteen wide column">
+		<div class="ui segment">
+			%{
+				count = 0;
+			}%
+			#{list items:blog.posts, as:'post'}
+				#{if post.isDraft}
+					<b class="ui teal header">${post.postTitle}</b>
+					<a href="/blog/${blog.id}/loaddraft/${post.id}">
+						Reverse to Post
+					</a>
+					<a href="/deletepost/${post.id}"><i class="red circle remove icon"></i></a>
+					<br><br><br>
+					%{
+						count++;
+					}%
+				#{/if}
+			#{/list}
+			#{if count == 0}
+				<a href="#" class="ui blue header">No drafts to display ...</a>
+			#{/if}
+		</div>
+	</div>
+</section>

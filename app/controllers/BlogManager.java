@@ -37,28 +37,44 @@ public class BlogManager extends Controller {
 		render(blog);
 	}
 	
-	public static void createPost(Long id,String postTitle, String postContent)
+	public static void draftManager(Long id)
 	{
 		Blog blog = Blog.findById(id);
-		blog.newPost(postTitle, postContent,false);
+		render(blog);
+	}
+	
+	public static void createPost(Long id,String postTitle, String postContent, String toDraft)
+	{
+		Blog blog = Blog.findById(id);
+		blog.newPost(postTitle, postContent,(toDraft != null));
 		blog.save();
 		postManager(id);
 	}
 	
 
-	public static void newPostDraft(Long id, String postTitle,String postContent)
+	public static void draftToPost(Long draftId)
 	{
-		Blog blog = Blog.findById(id);
-		blog.newPost(postTitle, postContent,true);
-		blog.save();
-		postManager(id);
+		Post draft = Post.findById(draftId);
+		draft.isDraft = false;
+		draft.save();
+		postManager(draft.blogPostHost.id);
 	}
 	
-	public static void editPost(Long idToEdit,String nTitle,String nContent)
+	public static void postToDraft(Long id)
+	{
+		Post post = Post.findById(id);
+		post.isDraft = true;
+		post.save();
+		postManager(post.blogPostHost.id);
+	}
+	
+	
+	public static void editPost(Long idToEdit,String nTitle,String nContent, String toDraft)
 	{
 		Post post = Post.findById(idToEdit);
 		Logger.info("Post to update: " + post.postTitle);
-		if(!post.postTitle.equals(nTitle) || !(post.postContent).equals(nContent)) {
+		if((!post.postTitle.equals(nTitle) 
+				|| !post.postContent.equals(nContent)) && !toDraft.equals("true")) {
 			User postOwner = post.blogPostHost.blogOwner;
 			Update update = new Update(postOwner,post,nTitle,nContent);
 			update.save();
@@ -70,6 +86,8 @@ public class BlogManager extends Controller {
 		post.postTitle = nTitle;
 		post.save();
 		post.postContent = nContent;
+		post.save();
+		post.isDraft = toDraft.equals("true");
 		post.save();
 		post.postDate = new Date();
 		post.save();
@@ -108,7 +126,11 @@ public class BlogManager extends Controller {
 	public static void pageView(String pageLink)
 	{
 		Page page = Page.find("byPageLink", pageLink).first();
-		render(page);
+		String publicview = "";
+		if (session.get("logged_in_userid") == null) {
+			publicview = "true";
+		}
+		render(page,publicview);
 	}
 	
 	public static void postView(Long postId)
@@ -116,7 +138,12 @@ public class BlogManager extends Controller {
 		Post post = Post.findById(postId);
 		String lastEdit = 
 				(new SimpleDateFormat("E dd/MM/yyyy 'at' hh:mm:ss")).format(post.postDate);
-		render(post,lastEdit);
+		int publicview = 0;
+		if (session.get("logged_in_userid") == null) {
+			publicview = 1;
+		}
+		Logger.info(session.get("logged_in_userid"));
+		render(post,lastEdit,publicview);
 	}
 	
 //	public static void newPageDraft(Long id,String pageLink, String pageTitle,String pageContent)

@@ -11,16 +11,25 @@ import models.*;
 public class Accounts extends Controller {
 
     public static void index() {
+    	if(session.get("logged_in_userid") != null) {
+    		Home.index();
+    	}
     	List<Post> posts = Post.findAll(); 
         render(posts);
     }
     
     public static void signup() {
+    	if(session.get("logged_in_userid") != null) {
+    		Home.index();
+    	}
     	render();
     }
 
     public static void login()
     {
+    	if(session.get("logged_in_userid") != null) {
+    		Home.index();
+    	}
     	render();
     }
     

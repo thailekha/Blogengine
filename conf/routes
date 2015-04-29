@@ -23,10 +23,11 @@ GET		/newsfeed								Home.newsFeed
 GET		/blog/{id}								BlogManager.index
 GET		/blog/{id}/posts						BlogManager.postManager
 GET		/blog/{id}/pages						BlogManager.pageManager
+GET		/blog/{id}/drafts						BlogManager.draftManager
 POST	/blog/{id}/newpost						BlogManager.createPost
 POST	/blog/{id}/newpage						BlogManager.createPage
-POST	/blog/{id}/newpostdraft					BlogManager.newPostDraft
-POST	/blog/{id}/newpagedraft					BlogManager.newPageDraft
+GET		/blog/{id}/loaddraft/{draftId}			BlogManager.draftToPost
+GET		/post/todraft/{id}						BlogManager.postToDraft
 POST	/blog/{id}/editpost/{postId}			BlogManager.editPost
 POST	/blog/{id}/editpage/{pageId}			BlogManager.editPage
 GET		/blogview/{blogId}						BlogManager.blogView
