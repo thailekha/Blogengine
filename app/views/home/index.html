@@ -109,7 +109,7 @@ var newsfeed = function() {
 				//Parse the Json response, use replace function in case 1 string in
 				//has multiple lines and break the parser
 				var update = JSON.parse(JSON.parse(updates[i]).replace(/\n/g,""));
-				alert(update);
+				//alert(update);
 				
 		        //Get the time
 				var currentTime = new Date().getTime();
@@ -129,7 +129,8 @@ var newsfeed = function() {
 		        
 				//Create <a> tag and attach the canvas into it
 				var link = document.createElement("a");
-				link.setAttribute('href','/post/' + update.postId);
+				link.setAttribute('href','/blog/' + update.blogId + '/post/' + update.postId);
+				
 				link.appendChild(canvas);
 				
 				//Put all childs together

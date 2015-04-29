@@ -32,7 +32,8 @@ public class UpdatesAdapter extends TypeAdapter<Update> {
 				+ " \"postId\": \"" + update.belong.id + "\","
 				+ " \"nTitle\": \"" + update.nTitle + "\","
 				+ " \"nContent\": \"" + StringNeutraliser.wipeQuotes(update.nContent) + "\","
-				+ " \"date\": \"" + update.realDate.getTime() + "\"}";	
+				+ " \"date\": \"" + update.realDate.getTime() + "\","
+				+ " \"blogId\": \"" + update.belong.blogPostHost.id + "\"}";	
 		writer.value(jUpdates);
 		Logger.info(jUpdates);
 	}

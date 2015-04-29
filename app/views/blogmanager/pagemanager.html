@@ -20,15 +20,23 @@
 				<a class="ui header" href="/page/${page.pageLink}">${page.pageTitle}</a>
 				<button class="ui tiny button" onclick=
 				"append('editsection${page.id}','edit','/blog/${blog.id}/editpage/${page.id}',
-						'POST','pageTitle','${page.pageTitle}','pageContent','${page.pageContent}','Edit Page','',true,'pageLink','${page.pageLink}',false,'${page.id}')">
+						'POST','pageTitle','${page.pageTitle}','pageContent',preContent('${page.id}'),
+						'Edit Page','',true,'pageLink','${page.pageLink}',false,'${page.id}')">
 					Edit
 				</button>
 				<a href="/deletepage/${page.id}">(delete)</a>
 				<br><br><br>
 			</div>	
+			<p id="prepcontent${page.id}" hidden="true">${page.pageContent}</p>
 			#{/list}
 		</div>
 	</div>
 </section>
 
-#{texteditor /}
+<script>
+var preContent = function(id)
+{	
+	var content = $('#prepcontent'+id).text();
+	return content.replace(/\u200B/g,'');
+}
+</script>

@@ -85,5 +85,7 @@ var manuReq = function()
 	xhr.open("POST",route,true);
 	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xhr.send("idToEdit=" + id + "&nTitle=" + nTitle + "&nContent=" + nContent + "&toDraft=" + checkbox);
+	alert("Updated"); //how could this make the code work in firefox @@ ?
+	alert(nContent);
 	//alert("Content: " + nContent);
 }

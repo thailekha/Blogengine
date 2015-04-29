@@ -91,6 +91,7 @@ public class Home extends Controller {
 		for(Update update: news) {
 			newsFeed.add(JsonParsers.updatesToJson(update));
 		}
+		Collections.reverse(newsFeed);
 		renderJSON(newsFeed);
 	}
 }

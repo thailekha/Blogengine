@@ -27,7 +27,7 @@ GET		/blog/{id}/drafts						BlogManager.draftManager
 POST	/blog/{id}/newpost						BlogManager.createPost
 POST	/blog/{id}/newpage						BlogManager.createPage
 GET		/blog/{id}/loaddraft/{draftId}			BlogManager.draftToPost
-GET		/post/todraft/{id}						BlogManager.postToDraft
+
 POST	/blog/{id}/editpost/{postId}			BlogManager.editPost
 POST	/blog/{id}/editpage/{pageId}			BlogManager.editPage
 GET		/blogview/{blogId}						BlogManager.blogView
