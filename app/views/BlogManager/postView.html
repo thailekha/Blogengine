@@ -1,6 +1,12 @@
 #{extends 'main.html' /}
 #{set title:'Post view' /}
-#{homenavigation /}
+
+#{if publicview == 1}
+	#{publicnavigation /}
+#{/if}
+#{else}
+	#{homenavigation /}
+#{/else}
 
 <section class="ui two column grid segment">
 <div class="ten wide column">
@@ -64,7 +70,10 @@
 			${other.postTitle}
 		</a>
 	#{/list}
-	<h4 class="ui purple dividing header">Blog owner</h4>
+	<h4 class="ui purple dividing header">
+		Blog owner
+		<a href="/publicprofile/${post.blogPostHost.blogOwner.id}">(Visit profile)</a>
+	</h4>
 	%{ user = post.blogPostHost.blogOwner }%
 	#{include "components/profilepanel.html" /}
 </div>

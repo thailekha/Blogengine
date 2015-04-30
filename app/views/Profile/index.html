@@ -7,10 +7,14 @@
 		<a id="firstname">${user.firstName}</a>
 		<a id="lastname">${user.lastName}</a>
 		's Profile
+		<h4 class="ui inverted purple header">(click on component's header to edit)</h4>
 	</h1>
-		#{editprofile form:"firstnameform", param:"firstName",
+	
+		#{editprofile action:"/editprofile",
+		 form:"firstnameform", param:"firstName",
 		component:"firstname", message:"Edit first name" /}
-		#{editprofile form:"lastnameform", param:"lastName",
+		#{editprofile action:"/editprofile",
+		 form:"lastnameform", param:"lastName",
 		component:"lastname", message:"Edit last name" /}
      #{include "components/profiledetails.html" /}
 </section>

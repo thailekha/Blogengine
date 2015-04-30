@@ -1,7 +1,15 @@
 #{extends 'main.html' /}
 #{set title:'Page view' /}
-#{homenavigation /}
-<section class="ui segment">
+
+#{if publicview == 1}
+	#{publicnavigation /}
+#{/if}
+#{else}
+	#{homenavigation /}
+#{/else}
+
+<section class="ui two column grid segment">
+<div class="ten wide column">
 	<a href="/blogview/${page.blogPageHost.id}" class="ui block header">${page.blogPageHost.blogTitle}</a>
 	<h1 class="ui header">${page.pageTitle}</h1>
 	<p> ${page.pageContent}
@@ -18,6 +26,15 @@
 	#{else}
 		<h4 class="ui blue header">Login to leave comments...</h4>
 	#{/else}
+</div>
+<div class="ui five wide column right floated segment">
+<h4 class="ui purple dividing header">
+		Blog owner
+		<a href="/publicprofile/${page.blogPageHost.blogOwner.id}">(Visit profile)</a>
+	</h4>
+	%{ user = page.blogPageHost.blogOwner }%
+	#{include "components/profilepanel.html" /}
+</div>
 </section>
 
 <script>

@@ -1,0 +1,49 @@
+#{extends 'main.html' /}
+#{set title:'Public profile' /}
+
+#{if publicview == 1}
+	#{publicnavigation /}
+#{/if}
+#{else}
+	#{homenavigation /}
+#{/else}
+
+<section class="ui two column grid segment">
+<div class="five wide column">
+	<h1 class="ui blue header">${user.firstName + " " + user.lastName}</h1>
+	<br>
+	#{include "components/profilepanel.html" /}
+</div>
+<div class="ten wide column">	
+	<div class="ui two column grid segment">
+		<div class="column">
+		<h1 class="ui teal header">${user.firstName}'s blogs</h1>
+		#{if user.blogs.size() == 0}
+			<h4>No blogs to display</h4>
+		#{/if}
+		#{list items:user.blogs, as:'blog'}
+			<a class="ui header" href="/blogview/${blog.id}">
+				<i class="teal right arrow icon"></i>
+				${blog.blogTitle}
+			</a>
+			<br><br>
+		#{/list}
+		</div>
+		<div class="column">
+		<h2 class="ui blue header">
+			${user.firstName}'s pages
+		</h2>
+		#{if pages.size() == 0}
+			<h4>No pages to display</h4>
+		#{/if}
+		#{list items:pages, as:'page'}
+			<a class="ui header" href="/page/${page.pageLink}">
+				<i class="blue right arrow icon"></i>
+				${page.pageTitle}
+			</a>
+			<br><br>
+		#{/list}
+		</div>
+	</div>
+</div>
+</section>

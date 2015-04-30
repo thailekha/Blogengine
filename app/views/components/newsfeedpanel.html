@@ -1,0 +1,94 @@
+<!-- <button onclick="newsfeed()" class="ui button">Newsfeed</button> -->
+<input id="newsfeedbox" type="checkbox" checked>
+	<a href="#" class="ui teal header">
+		Instant Newsfeed
+	</a>
+</input>
+<br>
+<div  id="newsfeedboard" class="ui segment"></div>
+<br><br>
+
+<script>
+setInterval(function(){ 
+	if(document.getElementById("newsfeedbox").checked) {
+	var xhr;
+	if(window.XMLHttpRequest) {
+		xhr = new XMLHttpRequest();
+	}
+	else {
+		xhr = new ActiveXObject("Microsoft.XMLHTTP");
+	}		
+	xhr.open("GET","/newsfeed",true);
+	xhr.send();
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState==4) 
+		{
+			$('#newsfeedboard').empty();
+			var updates = JSON.parse(xhr.responseText);
+			
+			var i;
+			for(i in updates) {
+				
+				//Parse the Json response, use replace function in case 1 string in
+				//has multiple lines and break the parser
+				var update = JSON.parse(JSON.parse(updates[i]).replace(/\n/g,""));
+				//alert(update);
+				
+		        //Get the time
+				var currentTime = new Date().getTime();
+				var storyTime = update.date;
+				var deltaTime = currentTime - storyTime;
+				var deltaSeconds = Math.trunc(deltaTime/1000);
+				
+				//Create link to user
+				var userlink = document.createElement("a");
+				userlink.setAttribute('href','#');
+				userlink.textContent = update.updaterName + ' (' 
+						+ deltaSeconds + ' seconds ago)';
+				//alert(userlink.textContent);
+				
+				//Build canvas tag
+				var canvas = buildCanvas(update.nTitle,update.nContent);
+		        
+				//Create <a> tag and attach the canvas into it
+				var link = document.createElement("a");
+				link.setAttribute('href','/blog/' + update.blogId + '/post/' + update.postId);
+				
+				link.appendChild(canvas);
+				
+				//Put all childs together
+				document.getElementById("newsfeedboard").appendChild(userlink);
+				$("#newsfeedboard").append("<br></br>");
+				document.getElementById("newsfeedboard").appendChild(link);
+				$("#newsfeedboard").append("<br></br>");
+				$("#newsfeedboard").append("<br></br>");				
+			}	
+		}
+	}
+} 
+}, 5000);
+
+//Function to build a canvas element, need to be separated from newsFeed()
+function buildCanvas(cTitle,cContent) {
+	var canvas = document.createElement('canvas');
+	canvas.setAttribute("style","border:1px solid black;");
+	canvas.setAttribute("width","720");
+	canvas.setAttribute("height","320");
+	var canvasContext = canvas.getContext('2d');
+	var data = '<svg xmlns="http://www.w3.org/2000/svg" width="720" height="320">' +
+       '<foreignObject width="100%" height="80%">' +
+       '<div xmlns="http://www.w3.org/1999/xhtml" style="font-size:20px">' + 
+       '<h5>' + cTitle + '</h5>' + cContent 
+       + '</div>' + '</foreignObject>' + '</svg>';
+   	var DOMURL = window.URL || window.webkitURL || window;
+    var img = new Image();
+    var svg = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
+    var url = DOMURL.createObjectURL(svg);
+    img.onload = function () {
+    canvasContext.drawImage(img, 0, 0);
+    	DOMURL.revokeObjectURL(url);
+    };
+    img.src = url;
+    return canvas;
+}
+</script>

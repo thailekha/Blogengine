@@ -11,10 +11,10 @@
 	}%
 	#{list items:blog.posts, as:'post'}
 		#{if post.isDraft}
-			postcount++;
+			%{ draftcount++; }%
 		#{/if}
 		#{else}
-			draftcount++;
+			%{ postcount++; }%
 		#{/else}
 	#{/list}	
 	<div class="fourteen wide column">

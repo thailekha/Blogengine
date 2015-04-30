@@ -116,19 +116,33 @@ public class BlogManager extends Controller {
 		pageManager(page.blogPageHost.id);
 	}
 	
+//	public static User getLoggedInUserNoRender()
+//	{
+//		if(session.contains("logged_in_userid")) {
+//    		return User.findById(Long.parseLong(session.get("logged_in_userid")));
+//    	}
+//    	else {
+//    		return null;
+//    	}
+//	}
+	
 	public static void blogView(Long blogId)
 	{
 		Blog blog = Blog.findById(blogId);
 		Collections.reverse(blog.posts);
-		render(blog);
+		int publicview = 0;
+		if (session.get("logged_in_userid") == null) {
+			publicview = 1;
+		}
+		render(blog, publicview);
 	}
 	
 	public static void pageView(String pageLink)
 	{
 		Page page = Page.find("byPageLink", pageLink).first();
-		String publicview = "";
+		int publicview = 0;
 		if (session.get("logged_in_userid") == null) {
-			publicview = "true";
+			publicview = 1;
 		}
 		render(page,publicview);
 	}

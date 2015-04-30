@@ -26,12 +26,14 @@
       <tr>
         <td>
         	<a>${user.email}</a>
-        	#{editprofile form:"emailform", param:"email",
+        	#{editprofile action:"/editprofile",
+        	 form:"emailform", param:"email",
 			component:"useremail", message:"Edit email" /}
         </td>
         <td>
         	<a>${user.age}</a>
-        	#{editprofile form:"ageform", param:"age",
+        	#{editprofile action:"/editprofile",
+        	 form:"ageform", param:"age",
 			component:"userage", message:"Edit age" /}
         </td>
       </tr>

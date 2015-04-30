@@ -45,6 +45,8 @@ GET		/update/{id}							BlogManager.getRecentPost
 
 # Profile page
 GET		/profile								Profile.index
+GET		/publicprofile/{id}						Profile.publicProfile
+POST	/editprofile							Profile.editProfile
 POST	/uploadpicture							Profile.uploadPicture	
 POST	/deleteaccount							Accounts.deleteUser
 

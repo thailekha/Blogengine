@@ -1,13 +1,36 @@
 #{extends 'main.html' /}
 #{set title:'Blog view' /}
-#{homenavigation /}
+
+#{if publicview == 1}
+	#{publicnavigation /}
+#{/if}
+#{else}
+	#{homenavigation /}
+#{/else}
 <section class="ui grid segment">
-<div class="eight wide column">
-	<a class="ui block header">${blog.blogTitle}</a>
+<div class="ten wide column">
+	<a class="ui blue inverted block header">${blog.blogTitle}</a>
+	
+	#{if publicview != 1}
+	<a href="/blog/${blog.id}">
+	<i class="big blue write square icon"></i>
+	</a>
+	#{/if}
+	<br><br>
 	#{list items:blog.posts, as:'post'}
+		<div class="ui segment">
 		<h3 class="ui block header">${post.postTitle}</h3>
 		<p> ${post.postContent} </p>
+		</div>
 	#{/list}
+</div>
+<div class="ui five wide column right floated segment">
+	<h4 class="ui purple dividing header">
+		Blog owner
+		<a href="/publicprofile/${blog.blogOwner.id}">(Visit profile)</a>
+	</h4>
+	%{ user = blog.blogOwner }%
+	#{include "components/profilepanel.html" /}
 </div>
 </section>
 

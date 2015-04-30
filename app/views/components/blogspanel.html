@@ -1,0 +1,27 @@
+	<div id="blogsshow" class="ui segment">
+		<button onclick="showblogs()" class="ui button">Current blogs</button>
+		<div id="blogssegment">
+			#{if user.blogs.size() == 0}
+				<h4>You don't have any blog</h4>
+			#{/if}
+			#{list items:user.blogs, as:'blog'}
+				<br>
+				<a class="ui blue header" href="/blog/${blog.id}">
+				<i class="right triangle icon"></i>
+					${blog.blogTitle}
+				</a>
+				<a href="/deleteblog/${blog.id}"><i class="red circle remove icon"></i></a>
+			#{/list}
+		</div>
+	</div>
+	<script>
+	$('#blogssegment').hide();
+	var showblogs = function() {
+		$('#blogssegment').toggle(500);
+	}
+	$('#blogsshow').hover(function(){
+		$('#blogsshow').css("background-color", "#B8E6B8");
+		}, function(){
+		$('#blogsshow').css("background-color", "white");
+	});
+	</script>

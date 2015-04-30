@@ -11,7 +11,6 @@ import play.Logger;
 import play.db.jpa.Model;
 
 @Entity
-@Table(name="`Update`")
 public class Update extends Model {
 
 	@ManyToOne
