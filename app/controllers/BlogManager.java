@@ -272,10 +272,10 @@ public class BlogManager extends Controller {
 		renderJSON(JsonParsers.postToJson(post));
 	}
 	
-	public static void checkUpdate(Long id, String nTitle, String nContent, String date)
-	{
-		Post post = Post.findById(id);
-		Logger.info("Post: " + post.postTitle +", new title: " 
-		+ nTitle + ", new content: " + nContent + ", date: " + date);
-	}
+//	public static void checkUpdate(Long id, String nTitle, String nContent, String date)
+//	{
+//		Post post = Post.findById(id);
+//		Logger.info("Post: " + post.postTitle +", new title: " 
+//		+ nTitle + ", new content: " + nContent + ", date: " + date);
+//	}
 }

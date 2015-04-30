@@ -42,7 +42,6 @@ POST	/blog/replycomment/{commentId}			BlogManager.replyComment
 GET		/blog/post/deletecomment/{commentId}	BlogManager.deleteComment
 GET		/blog/post/deletereply/{replyId}		BlogManager.deleteReplyComment
 GET		/update/{id}							BlogManager.getRecentPost
-POST	/checkupdate							BlogManager.checkUpdate
 
 # Profile page
 GET		/profile								Profile.index
