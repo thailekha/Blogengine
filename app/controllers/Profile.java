@@ -73,6 +73,6 @@ public class Profile extends Controller {
 		if(user.password.equals(password)) {
 			Wiper.removeUser(user.id);
 		}
-    	index();
+    	Accounts.index();
     }
 }
