@@ -5,13 +5,7 @@
 <div class="five wide column">
 	<h1 class="ui blue header">${user.firstName + " " + user.lastName}'s home page</h1>
 	<br>
-	<div class="ui compact segment">
-		<img src="/profilepicture/${user.id}" class="ui small image">
-		<br><br>
-		<a href="#">Following: ${user.followings.size()}</a>
-		<br>
-		<a href="#">Followers: ${user.followers.size()}</a>
-	</div>
+	#{include "components/profilepanel.html" /}
 	#{blogform /}
 	<div id="blogsshow" class="ui segment">
 		<button onclick="showblogs()" class="ui button">Your blogs</button>
@@ -61,7 +55,13 @@
 	
 </div>	
 <div class="ui ten wide column">
-<button onclick="newsfeed()" class="ui button">Newsfeed</button>
+<!-- <button onclick="newsfeed()" class="ui button">Newsfeed</button> -->
+<input id="newsfeedbox" type="checkbox">
+	<a href="#" class="ui teal header">
+		Instant Newsfeed
+	</a>
+</input>
+<br>
 <div  id="newsfeedboard" class="ui segment"></div>
 <br><br>
 </div>	
@@ -87,7 +87,8 @@ $('#othersshow').hover(function(){
 	$('#othersshow').css("background-color", "white");
 });
 
-var newsfeed = function() {
+setInterval(function(){ 
+	if(document.getElementById("newsfeedbox").checked) {
 	var xhr;
 	if(window.XMLHttpRequest) {
 		xhr = new XMLHttpRequest();
@@ -142,7 +143,8 @@ var newsfeed = function() {
 			}	
 		}
 	}
-};
+} 
+}, 5000);
 
 //Function to build a canvas element, need to be separated from newsFeed()
 function buildCanvas(cTitle,cContent) {
@@ -152,7 +154,7 @@ function buildCanvas(cTitle,cContent) {
 	canvas.setAttribute("height","320");
 	var canvasContext = canvas.getContext('2d');
 	var data = '<svg xmlns="http://www.w3.org/2000/svg" width="720" height="320">' +
-       '<foreignObject width="100%" height="100%">' +
+       '<foreignObject width="100%" height="80%">' +
        '<div xmlns="http://www.w3.org/1999/xhtml" style="font-size:20px">' + 
        '<h5>' + cTitle + '</h5>' + cContent 
        + '</div>' + '</foreignObject>' + '</svg>';

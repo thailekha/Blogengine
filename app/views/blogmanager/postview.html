@@ -2,7 +2,8 @@
 #{set title:'Post view' /}
 #{homenavigation /}
 
-<section class="ui segment">
+<section class="ui two column grid segment">
+<div class="ten wide column">
 	<a href="/blogview/${post.blogPostHost.id}" class="ui blue block header">${post.blogPostHost.blogTitle}</a>
 	<br><br><br>
 	<b id="title" class="ui purple header">
@@ -53,7 +54,22 @@
 	#{else}
 		<h4 class="ui blue header">Login to leave comments...</h4>
 	#{/else}
+</div>
+<div class="ui five wide column right floated segment">
+	<h4 class="ui blue header">Other posts from  
+		<a href="/blogview/${post.blogPostHost.id}">${post.blogPostHost.blogTitle}</a>
+	</h4>
+	#{list items:otherPosts, as:'other'}
+		<a href="/blog/${other.blogPostHost.id}/post/${other.id}">
+			${other.postTitle}
+		</a>
+	#{/list}
+	<h4 class="ui purple dividing header">Blog owner</h4>
+	%{ user = post.blogPostHost.blogOwner }%
+	#{include "components/profilepanel.html" /}
+</div>
 </section>
+
 
 <!-- HTML nodes stored in string needed to be "decoded" -->
 <script>

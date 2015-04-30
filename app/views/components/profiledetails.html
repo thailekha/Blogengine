@@ -1,16 +1,20 @@
+<section class="ui two column grid">
+<div class="five wide column ui segment">
   <div class="ui medium image">
-    <h5 class="ui header">Thumbail Image</h5>
-    <img src="/profile/getthumbnail/${user.id}">
+    <h5 class="ui header">Profile Image</h5>
+    <img src="/profilepicture/${user.id}">
+    <br>
   </div>
   <section class="ui form">
-    <form action="/profile/uploadthumbnail/${user.id}" method="post" enctype="multipart/form-data">     
+    <form action="/uploadpicture" method="post" enctype="multipart/form-data">     
       <div class="ui field">
         <input type="file" name="picture"></input> 
      </div>     
-     <button class="ui submit button"> Upload</button>       
+     <button class="ui blue submit button"> Upload</button>       
     </form>        
   </section>   
-
+</div>
+<div class="eleven wide column">
   <table class="ui inverted table segment">
     <thead>
       <tr>
@@ -33,3 +37,19 @@
       </tr>
     </tbody>
   </table>
+  <button class="ui small red button" onclick="showdelete()">Delete account</button>
+  <form class="ui form segment" id="deleteaccount" action="/deleteaccount" method="POST">
+  <div class="field">
+  	<label>Confirm password</label>
+  	<input type="password" name="password">
+  </div>
+  <button class="ui blue button">Submit</button>
+  </form>
+  <script>
+  	$('#deleteaccount').hide();
+  	var showdelete = function() {
+  		$('#deleteaccount').toggle(500);
+  	};  	
+  </script>
+</div>
+</section>

@@ -73,12 +73,6 @@ public class Accounts extends Controller {
     		return null;
     	}
     }
-   
-    public static void deleteUser(Long id)
-    {
-    	Wiper.removeUser(id);
-    	index();
-    }
     
     public static void deleteAll()
     {

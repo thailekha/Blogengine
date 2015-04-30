@@ -13,7 +13,7 @@ GET		/resetdb								Accounts.deleteAll
 
 # Home page
 GET		/home									Home.index
-GET		/profilepicture/{id}					Home.getPicture		
+GET		/profilepicture/{id}					Home.getPicture
 POST	/newblog								Home.newBlog
 GET		/deleteblog/{id}						Home.deleteBlog
 GET		/follow/{id}							Home.follow
@@ -46,7 +46,8 @@ POST	/checkupdate							BlogManager.checkUpdate
 
 # Profile page
 GET		/profile								Profile.index
-GET		/deleteaccount/{id}						Accounts.deleteUser
+POST	/uploadpicture							Profile.uploadPicture	
+POST	/deleteaccount							Accounts.deleteUser
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

@@ -28,7 +28,7 @@ public class Home extends Controller {
 	}
 	
 	public static void getPicture(Long id) 
-	  {
+	{
 	    User user = User.findById(id);
 	    Blob picture = user.profilePicture;
 	    if (picture.exists())
@@ -36,7 +36,7 @@ public class Home extends Controller {
 	      response.setContentTypeIfNotSet(picture.type());
 	      renderBinary(picture.get());
 	    }
-	  }
+	}
 	
 	public static void newBlog(String blogTitle)
 	{

@@ -136,14 +136,20 @@ public class BlogManager extends Controller {
 	public static void postView(Long postId)
 	{
 		Post post = Post.findById(postId);
-		String lastEdit = 
-				(new SimpleDateFormat("E dd/MM/yyyy 'at' hh:mm:ss")).format(post.postDate);
-		int publicview = 0;
-		if (session.get("logged_in_userid") == null) {
-			publicview = 1;
+		if(post != null) {
+			String lastEdit = 
+					(new SimpleDateFormat("E dd/MM/yyyy 'at' hh:mm:ss")).format(post.postDate);
+			int publicview = 0;
+			if (session.get("logged_in_userid") == null) {
+				publicview = 1;
+			}
+			List<Post> otherPosts = post.blogPostHost.posts;
+			otherPosts.remove(post);
+			render(post,otherPosts,lastEdit,publicview);
+		}	
+		else {
+			Home.index();
 		}
-		Logger.info(session.get("logged_in_userid"));
-		render(post,lastEdit,publicview);
 	}
 	
 //	public static void newPageDraft(Long id,String pageLink, String pageTitle,String pageContent)
