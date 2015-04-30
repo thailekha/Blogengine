@@ -30,7 +30,7 @@ public class UpdatesAdapter extends TypeAdapter<Update> {
 		String jUpdates = "{\"updaterId\": \"" + update.updater.id + "\","
 				+ " \"updaterName\": \"" + name + "\","
 				+ " \"postId\": \"" + update.belong.id + "\","
-				+ " \"nTitle\": \"" + update.nTitle + "\","
+				+ " \"nTitle\": \"" + StringNeutraliser.wipeQuotes(update.nTitle) + "\","
 				+ " \"nContent\": \"" + StringNeutraliser.wipeQuotes(update.nContent) + "\","
 				+ " \"date\": \"" + update.realDate.getTime() + "\","
 				+ " \"blogId\": \"" + update.belong.blogPostHost.id + "\"}";	

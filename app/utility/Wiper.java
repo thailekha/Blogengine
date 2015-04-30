@@ -20,7 +20,7 @@ import models.User;
  * task still might be executed but Play will render a blank page.
  * This class is written to avoid that and include remover for instances 
  * in database. Duplicate codes would be minimized 
- * @author User
+ * @author Thai Kha Le
  *
  */
 public class Wiper {

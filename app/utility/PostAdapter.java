@@ -29,7 +29,7 @@ public class PostAdapter extends TypeAdapter<Post> {
 	         return;
 	       }
 		//long postid = post.id;
-		String jpost = "{" + "\"postTitle\": " + "\"" + post.postTitle + "\""
+		String jpost = "{" + "\"postTitle\": " + "\"" + StringNeutraliser.wipeQuotes(post.postTitle) + "\""
 				+ "," + "\"postContent\": " + "\"" + StringNeutraliser.wipeQuotes(post.postContent) + "\"" 
 				+ "," + "\"postDate\": " + "\"" + 
 				(new SimpleDateFormat("E dd/MM/yyyy 'at' hh:mm:ss")).format(post.postDate) + "\"" + "}";

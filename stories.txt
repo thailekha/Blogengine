@@ -1,0 +1,29 @@
+Story 1
+Skeleton models: User can set up an account, create many blogs, create many posts and pages in each blog and leave comments in each of those posts and pages after having logged in.
+
+Story 2
+User can choose to delete current account
+
+Story 3
+There are two perspectives for blogging: managers (including blog, post, page and draft) and views (including blog, post and page)
+
+Story 4
+A draft can be created, switched to post, reversed back to itself from post, and deleted
+
+Story 5
+Posts will have “id”-ed links while pages will have “named” links
+
+Story 6
+User can have replies to a comment and delete them if needed
+
+Story 7
+External text editor is available for more attractive contents (ex: color, alignment, highlight, font-style, etc.)
+
+Story 8
+If simultaneously a post owner is editing a post and other users are viewing it, they will see the change in three seconds (minimum) after the owner press “edit” button
+
+Story 9
+One user can choose to follow other people and get all the changes they have made with each of their available posts (in chronological order). All of those updates will be presented as small snapshots on the newsfeed board of the user’s home page. However, updates will disappeared if the post that they belong to is deleted. Keep clicking the “newsfeed” button will instantly update the stories and click unfollow will get rid of all the stories from whom user does not want to see.
+
+Story 10
+Simple and user-friendly layout with some animation
