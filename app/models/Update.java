@@ -5,11 +5,13 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import play.Logger;
 import play.db.jpa.Model;
 
 @Entity
+@Table(name="`Update`")
 public class Update extends Model {
 
 	@ManyToOne
