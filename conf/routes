@@ -48,7 +48,7 @@ GET		/profile								Profile.index
 GET		/publicprofile/{id}						Profile.publicProfile
 POST	/editprofile							Profile.editProfile
 POST	/uploadpicture							Profile.uploadPicture	
-POST	/deleteaccount							Accounts.deleteUser
+POST	/deleteaccount							Profile.deleteUser
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
