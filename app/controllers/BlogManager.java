@@ -131,7 +131,7 @@ public class BlogManager extends Controller {
 		Blog blog = Blog.findById(blogId);
 		Collections.reverse(blog.posts);
 		int publicview = 0;
-		if (session.get("logged_in_userid") == null) {
+		if (!session.contains("logged_in_userid")) {
 			publicview = 1;
 		}
 		render(blog, publicview);
@@ -141,7 +141,7 @@ public class BlogManager extends Controller {
 	{
 		Page page = Page.find("byPageLink", pageLink).first();
 		int publicview = 0;
-		if (session.get("logged_in_userid") == null) {
+		if (!session.contains("logged_in_userid")) {
 			publicview = 1;
 		}
 		render(page,publicview);
@@ -154,7 +154,7 @@ public class BlogManager extends Controller {
 			String lastEdit = 
 					(new SimpleDateFormat("E dd/MM/yyyy 'at' hh:mm:ss")).format(post.postDate);
 			int publicview = 0;
-			if (session.get("logged_in_userid") == null) {
+			if (!session.contains("logged_in_userid")) {
 				publicview = 1;
 			}
 			List<Post> otherPosts = post.blogPostHost.posts;
